@@ -63,7 +63,10 @@ public class RuoloServiceImpl implements RuoloService {
 
 			// uso l'injection per il dao
 			ruoloDAO.setEntityManager(entityManager);
-
+			if(o.getCodice()==null || o.getDescrizione()==null || o.getDescrizione().isEmpty()
+					|| ruoloDAO.list().contains(o) ) {
+				throw new Exception("Errore in aggiorna ruolo");
+			}
 			// eseguo quello che realmente devo fare
 			ruoloDAO.update(o);
 
@@ -87,6 +90,10 @@ public class RuoloServiceImpl implements RuoloService {
 			// uso l'injection per il dao
 			ruoloDAO.setEntityManager(entityManager);
 
+			if(o.getCodice()==null || o.getDescrizione()==null || o.getDescrizione().isEmpty()
+					|| ruoloDAO.list().contains(o)) {
+				throw new Exception("Errore in inserisci ruolo");
+			}
 			// eseguo quello che realmente devo fare
 			ruoloDAO.insert(o);
 
@@ -110,6 +117,9 @@ public class RuoloServiceImpl implements RuoloService {
 			// uso l'injection per il dao
 			ruoloDAO.setEntityManager(entityManager);
 
+			if(o.getUtenti().size()>0) {
+				throw new Exception("Errore in rimuovi ruolo");
+			}
 			// eseguo quello che realmente devo fare
 			ruoloDAO.delete(o);
 

@@ -4,7 +4,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
+import it.bibliotecaweb.model.Autore;
 import it.bibliotecaweb.model.Libro;
 
 public class LibroDAOImpl implements LibroDAO {
@@ -48,5 +50,16 @@ public class LibroDAOImpl implements LibroDAO {
 	@Override
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	@Override
+	public Set<Libro> prendiInsieme(String titolo, String genere, String trama, Autore a) {
+		String q ="from Libro l where (l.titolo like ?1 or ?1 = null) and (l.genere like ?2 or ?2 = null) and (l.trama like ?3 or ?3 = null) and (l.autore.id=?4 or ?4 = null)";
+		TypedQuery<Libro> query=entityManager.createQuery(q,Libro.class);
+		query.setParameter(1, titolo.isEmpty()?null:"%"+titolo+"%");
+		query.setParameter(2, genere.isEmpty()?null:"%"+genere+"%");
+		query.setParameter(3, trama.isEmpty()?null:"%"+trama+"%");
+		query.setParameter(4, a==null?null:a.getId());
+		return query.getResultList().stream().collect(Collectors.toSet());
 	}
 }

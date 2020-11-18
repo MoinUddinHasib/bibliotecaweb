@@ -11,7 +11,7 @@
 	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active"><a class="nav-link"
-				href="${pageContext.request.contextPath}/ServletLoggin">Home <span
+				href="${pageContext.request.contextPath}/EntryPage.jsp">Home <span
 					class="sr-only">(current)</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 			<li class="nav-item"><a class="nav-link disabled" href="#"
@@ -26,12 +26,14 @@
 						class="dropdown-item" href="#">Inserisci nuovo elemento</a>
 				</div></li>
 			<li class="nav-item active"></li>
-			<li>Benvenuto   ${sessionScope.nome } ${sessionScope.cognome }</li>
+			<li class="nav-item active">
+      <c:if test="${ sessionScope.stato != ATTIVO}">
+        <a class="nav-link" href="ServletLogOut">Log-Out <span class="sr-only">(current)</span></a>
+        </c:if>
+      </li>
+			<li>Benvenuto   ${sessionScope.nome } ${sessionScope.cognome } ${sessionScope.username }</li>
 		</ul>
-		<c:if test="${ sessionScope.ruolo != null}">
-			<a class="nav-link" href="ServletLogOut">Log-Out <span
-				class="sr-only">(current)</span></a>
-		</c:if>
+		
 		<form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search"
 				aria-label="Search">

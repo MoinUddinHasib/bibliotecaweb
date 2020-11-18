@@ -28,6 +28,10 @@ public class Libro {
 	@JoinColumn(name = "autore_fk_id")
 	private Autore autore;
 	
+	public Libro() {
+		super();
+	}
+
 	public Libro(String titolo, String genere, String trama) {
 		super();
 		this.titolo = titolo;
@@ -86,9 +90,9 @@ public class Libro {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((autore == null) ? 0 : autore.hashCode());
-		result = prime * result + ((genere == null) ? 0 : genere.hashCode());
-		result = prime * result + ((titolo == null) ? 0 : titolo.hashCode());
-		result = prime * result + ((trama == null) ? 0 : trama.hashCode());
+		result = prime * result + ((genere == null) ? 0 : genere.toLowerCase().hashCode());
+		result = prime * result + ((titolo == null) ? 0 : titolo.toLowerCase().hashCode());
+		result = prime * result + ((trama == null) ? 0 : trama.toLowerCase().hashCode());
 		return result;
 	}
 
@@ -109,17 +113,17 @@ public class Libro {
 		if (genere == null) {
 			if (other.genere != null)
 				return false;
-		} else if (!genere.equals(other.genere))
+		} else if (!(genere.toLowerCase()).equals(other.genere.toLowerCase()))
 			return false;
 		if (titolo == null) {
 			if (other.titolo != null)
 				return false;
-		} else if (!titolo.equals(other.titolo))
+		} else if (!(titolo.toLowerCase()).equals(other.titolo.toLowerCase()))
 			return false;
 		if (trama == null) {
 			if (other.trama != null)
 				return false;
-		} else if (!trama.equals(other.trama))
+		} else if (!(trama.toLowerCase()).equals(other.trama.toLowerCase()))
 			return false;
 		return true;
 	}	

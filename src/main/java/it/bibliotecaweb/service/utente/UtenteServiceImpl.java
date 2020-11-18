@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import it.bibliotecaweb.dao.EntityManagerUtil;
 import it.bibliotecaweb.dao.utente.UtenteDAO;
+import it.bibliotecaweb.model.Ruolo;
 import it.bibliotecaweb.model.Utente;
 
 public class UtenteServiceImpl implements UtenteService {
@@ -64,6 +65,11 @@ public class UtenteServiceImpl implements UtenteService {
 			// uso l'injection per il dao
 			utenteDAO.setEntityManager(entityManager);
 
+			if(o.getNome()==null || o.getNome().isEmpty() || o.getCognome()==null ||
+					o.getCognome().isEmpty() || utenteDAO.list().contains(o)
+					|| o.getRuoli().size()==0) {
+				throw new Exception("Errore in aggiorna utente");
+			}
 			// eseguo quello che realmente devo fare
 			utenteDAO.update(o);
 
@@ -87,6 +93,11 @@ public class UtenteServiceImpl implements UtenteService {
 			// uso l'injection per il dao
 			utenteDAO.setEntityManager(entityManager);
 
+			if(o.getNome()==null || o.getNome().isEmpty() || o.getCognome()==null ||
+					o.getCognome().isEmpty() || utenteDAO.list().contains(o)
+					|| o.getRuoli().size()==0) {
+				throw new Exception("Errore in inserisci utente");
+			}
 			// eseguo quello che realmente devo fare
 			utenteDAO.insert(o);
 
@@ -125,4 +136,57 @@ public class UtenteServiceImpl implements UtenteService {
 	public void setUtenteDao(UtenteDAO utenteDAO) {
 		this.utenteDAO=utenteDAO;
 	}
+	
+	@Override
+	public Utente caricaPerUsername(String us) throws Exception {
+		// questo è come una connection
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			utenteDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return utenteDAO.findByUsername(us);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+	}
+
+	@Override
+	public void inserisciRuolo(Utente u, Ruolo r) throws Exception {
+		// questo è come una connection
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			// questo è come il MyConnection.getConnection()
+			entityManager.getTransaction().begin();
+
+			// uso l'injection per il dao
+			utenteDAO.setEntityManager(entityManager);
+
+			// 'attacco' alla sessione di hibernate i due oggetti
+			// così jpa capisce che se è già presente quel ruolo non deve essere inserito
+			u = entityManager.merge(u);
+			r = entityManager.merge(r);
+			
+			u.getRuoli().add(r);
+			r.getUtenti().add(u);
+			//l'update non viene richiamato a mano in quanto 
+			//risulta automatico, infatti il contesto di persistenza
+			//rileva che utenteEsistente ora è dirty vale a dire che una sua
+			//proprieta ha subito una modifica (vale anche per i Set ovviamente)
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 }

@@ -1,4 +1,4 @@
-package it.biblioteca.filtro;
+package it.bibliotecaweb.servlet.filtro;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class FiltroAutenticazione implements Filter{
 
 	@Override

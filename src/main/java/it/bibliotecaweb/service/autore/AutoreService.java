@@ -9,5 +9,4 @@ public interface AutoreService extends IBaseService<Autore>{
 	// questo mi serve per injection
 	public void setAutoreDao(AutoreDAO autoreDao);
 
-
 }

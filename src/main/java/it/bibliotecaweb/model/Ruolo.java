@@ -36,6 +36,10 @@ public class Ruolo {
 	private String descrizione;
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "ruoli")
 	private Set<Utente> utenti= new HashSet<>();
+	
+	public Ruolo() {
+		super();
+	}
 	public Ruolo(Codice codice, String descrizione) {
 		super();
 		this.codice = codice;
@@ -74,7 +78,7 @@ public class Ruolo {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codice == null) ? 0 : codice.hashCode());
-		result = prime * result + ((descrizione == null) ? 0 : descrizione.hashCode());
+		result = prime * result + ((descrizione == null) ? 0 : descrizione.toLowerCase().hashCode());
 		return result;
 	}
 	@Override
@@ -91,7 +95,7 @@ public class Ruolo {
 		if (descrizione == null) {
 			if (other.descrizione != null)
 				return false;
-		} else if (!descrizione.equals(other.descrizione))
+		} else if (!(descrizione.toLowerCase()).equals(other.descrizione.toLowerCase()))
 			return false;
 		return true;
 	}

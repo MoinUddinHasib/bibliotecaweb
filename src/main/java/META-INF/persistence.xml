@@ -11,6 +11,7 @@
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bibliotecaweb?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="root"/>
+			<property name="hibernate.enable_lazy_load_no_trans" value="true"/>
 			
 			
 			<!-- setup con H2 
@@ -28,9 +29,9 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
 			<property name="hibernate.connection.pool_size" value="10"/>
 			
-			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.show_sql" value="false"/>
 			<!-- create-drop,create,update,validate -->
-			<property name="hibernate.hbm2ddl.auto" value="create"/>
+			<property name="hibernate.hbm2ddl.auto" value=""/>
 		</properties>
 	</persistence-unit>
 </persistence>

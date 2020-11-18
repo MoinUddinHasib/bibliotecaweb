@@ -1,9 +1,11 @@
 package it.bibliotecaweb.dao.utente;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import it.bibliotecaweb.model.Utente;
 
@@ -49,5 +51,14 @@ public class UtenteDAOImpl implements UtenteDAO {
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+
+	@Override
+	public Utente findByUsername(String us) {		
+		String q="from Utente u where u.username=?1";
+		TypedQuery<Utente> query = entityManager.createQuery(q,Utente.class);
+		List<Utente> ris=query.setParameter(1, us).getResultList();
+		return ris.isEmpty()?null:ris.get(0);
+	}
+
 
 }

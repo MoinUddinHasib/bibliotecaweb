@@ -47,6 +47,11 @@ public class Utente {
 	inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "id"))
 	private Set<Ruolo> ruoli= new HashSet<>();
 
+	
+	public Utente() {
+		super();
+	}
+
 	public Utente(String nome, String cognome, String username, String password) {
 		super();
 		this.nome = nome;

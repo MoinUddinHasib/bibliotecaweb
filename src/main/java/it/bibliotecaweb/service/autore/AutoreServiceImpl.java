@@ -63,7 +63,11 @@ public class AutoreServiceImpl implements AutoreService {
 
 			// uso l'injection per il dao
 			autoreDAO.setEntityManager(entityManager);
-
+			if(o.getNome()==null || o.getNome().isEmpty() || o.getCognome()==null
+					|| o.getCognome().isEmpty() || o.getData_di_nascita()==null || 
+					autoreDAO.list().contains(o)){
+				throw new Exception("Errore in aggiorna autore");
+			}
 			// eseguo quello che realmente devo fare
 			autoreDAO.update(o);
 
@@ -87,6 +91,12 @@ public class AutoreServiceImpl implements AutoreService {
 			// uso l'injection per il dao
 			autoreDAO.setEntityManager(entityManager);
 
+			if(o.getNome()==null || o.getNome().isEmpty() || o.getCognome()==null
+					|| o.getCognome().isEmpty() || o.getData_di_nascita()==null ||
+					autoreDAO.list().contains(o)){
+				throw new Exception("Errore in inserisci autore");
+			}
+			
 			// eseguo quello che realmente devo fare
 			autoreDAO.insert(o);
 
@@ -110,6 +120,9 @@ public class AutoreServiceImpl implements AutoreService {
 			// uso l'injection per il dao
 			autoreDAO.setEntityManager(entityManager);
 
+			if(o.getLibri().size()==0){
+				throw new Exception("Errore in rimuovi autore");
+			}
 			// eseguo quello che realmente devo fare
 			autoreDAO.delete(o);
 
@@ -125,5 +138,6 @@ public class AutoreServiceImpl implements AutoreService {
 	public void setAutoreDao(AutoreDAO autoreDAO) {
 		this.autoreDAO=autoreDAO;
 	}
+	
 
 }
