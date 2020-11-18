@@ -66,10 +66,10 @@ public class InserisciAutore extends HttpServlet {
 		String cognome = request.getParameter("cognome");
 		LocalDate data=null;
 		try {
-			System.out.println(request.getParameter("data"));
+
 			String[] dat=request.getParameter("data").split("-");
 			dat[2]=String.valueOf(Integer.parseInt(dat[2])+1);
-			System.out.println(dat[0]+"-"+dat[1]+"-"+dat[2]);
+
 			data = LocalDate.parse(dat[0]+"-"+dat[1]+"-"+dat[2]);
 			
 		} catch (DateTimeParseException|NumberFormatException e) {
@@ -89,7 +89,7 @@ public class InserisciAutore extends HttpServlet {
 			Autore a = new Autore(nome, cognome, data);			
 			MyServiceFactory.getAutoreServiceInstance().inserisciNuovo(a);
 			
-			request.setAttribute("listaAutoriParam", MyServiceFactory.getAutoreServiceInstance().listAll());
+			request.setAttribute("listaAutoriparam", MyServiceFactory.getAutoreServiceInstance().listAll());
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {
 			e.printStackTrace();

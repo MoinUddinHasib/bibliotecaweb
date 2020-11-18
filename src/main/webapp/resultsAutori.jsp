@@ -56,7 +56,7 @@
 		                </thead>
 		                <tbody>
 		                	
-		                	<c:forEach items="${requestScope.listaAutoriParam}" var= 'a'>							
+		                	<c:forEach items="${requestScope.listaAutoriparam}" var= 'a'>							
 		                    <tr >
 		                        <td>${a.getId()}</td>
 		                        <td>${a.getNome()}</td>

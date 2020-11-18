@@ -1,4 +1,4 @@
-package it.bibliotecaweb.servlet.libro;
+package it.bibliotecaweb.servlet.autore;
 
 import java.io.IOException;
 import java.util.Set;
@@ -11,20 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import it.bibliotecaweb.model.Autore;
-import it.bibliotecaweb.model.Libro;
 import it.bibliotecaweb.service.MyServiceFactory;
 
 /**
- * Servlet implementation class SearchLibro
+ * Servlet implementation class SearchAutore
  */
-@WebServlet("/SearchLibro")
-public class SearchLibro extends HttpServlet {
+@WebServlet("/SearchAutore")
+public class SearchAutore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchLibro() {
+    public SearchAutore() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,12 +37,8 @@ public class SearchLibro extends HttpServlet {
 			response.sendRedirect(request.getContextPath());
 			return;
 		}*/
-		try {
-			request.setAttribute("autori", it.bibliotecaweb.service.MyServiceFactory.getAutoreServiceInstance().listAll());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		request.getRequestDispatcher("form_cercaLibro.jsp").forward(request, response);
+
+		request.getRequestDispatcher("form_cercaAutore.jsp").forward(request, response);
 	}
 
 	/**
@@ -51,34 +46,27 @@ public class SearchLibro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();-------------------------------------------------------------------------------------------------------------------------------------
 		if(session.getAttribute("ruolo")==null) {
 			response.sendRedirect(request.getContextPath());
 			return;
 		}*/
 		HttpSession session = request.getSession();
-		String titolo=request.getParameter("titolo");
-		String genere=request.getParameter("genere");
-		String trama=request.getParameter("trama");
-		Autore a=null;
+		String nome=request.getParameter("nome");
+		String cognome=request.getParameter("cognome");
 		
 		try {
-			a=MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("autore")));
 			
-			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(titolo,genere,trama,a);
-			request.setAttribute("listaLibriparam", libri);
-		}catch (NumberFormatException e) {
-			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
-			return;
+			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
+			request.setAttribute("listaAutoriparam", autori);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		session.setAttribute("filtro", true);
-		session.setAttribute("titolo", titolo);
-		session.setAttribute("genere", genere);
-		session.setAttribute("trama", trama);
-		session.setAttribute("autore", a);
-		request.getRequestDispatcher("listaLibri.jsp").forward(request, response);
+		session.setAttribute("nome", nome);
+		session.setAttribute("cognome", cognome);
+
+		request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);
 	}
 
 }

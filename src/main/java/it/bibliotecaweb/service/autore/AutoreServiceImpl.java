@@ -138,6 +138,26 @@ public class AutoreServiceImpl implements AutoreService {
 	public void setAutoreDao(AutoreDAO autoreDAO) {
 		this.autoreDAO=autoreDAO;
 	}
+
+	@Override
+	public Set<Autore> findByParameter(String nome, String cognome) {
+		// questo è come una connection
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			autoreDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return autoreDAO.cercaInsieme(nome,cognome);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
+		}
+	}
 	
 
 }
