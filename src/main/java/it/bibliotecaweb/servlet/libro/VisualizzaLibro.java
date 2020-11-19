@@ -1,29 +1,27 @@
-package it.bibliotecaweb.servlet.autore;
+package it.bibliotecaweb.servlet.libro;
 
 import java.io.IOException;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import it.bibliotecaweb.model.Autore;
+import it.bibliotecaweb.model.Libro;
 import it.bibliotecaweb.service.MyServiceFactory;
 
 /**
- * Servlet implementation class SearchAutore
+ * Servlet implementation class VisualizzaLibro
  */
-@WebServlet("/SearchAutore")
-public class SearchAutore extends HttpServlet {
+@WebServlet("/VisualizzaLibro")
+public class VisualizzaLibro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchAutore() {
+    public VisualizzaLibro() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,35 +35,28 @@ public class SearchAutore extends HttpServlet {
 			response.sendRedirect(request.getContextPath());
 			return;
 		}*/
-
-		request.getRequestDispatcher("form_cercaAutore.jsp").forward(request, response);
+		Libro a = null;
+		try {
+			a = MyServiceFactory.getLibroServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("id")));
+		}catch (NumberFormatException e) {
+			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
+			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("id", a.getId());
+		request.setAttribute("titolo", a.getTitolo());
+		request.setAttribute("genere", a.getGenere());
+		request.setAttribute("trama", a.getTrama());
+		request.setAttribute("nome_autore", a.getAutore().getNome());
+		request.setAttribute("cognome_autore", a.getAutore().getCognome());
+		request.getRequestDispatcher("showLibro.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
-		HttpSession session = request.getSession();
-		String nome=request.getParameter("nome");
-		String cognome=request.getParameter("cognome");
-		
-		try {
-			
-			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
-			request.setAttribute("listaAutoriparam", autori);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		session.setAttribute("nome", nome);
-		session.setAttribute("cognome", cognome);
-
-		request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);
 	}
 
 }

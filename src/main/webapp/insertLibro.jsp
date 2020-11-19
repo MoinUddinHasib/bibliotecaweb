@@ -82,7 +82,6 @@
 								<c:forEach items="${requestScope.autori}" var="aut">
 									<option value="${aut.id }">${aut.nome }, ${aut.cognome }</option>
 								</c:forEach>
-								<option value="-1" selected>Nessun Autore</option>
 							</select>
 
 						</div>

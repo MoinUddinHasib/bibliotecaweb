@@ -66,6 +66,8 @@ public class InserisciAutore extends HttpServlet {
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		LocalDate data=null;
+		String n=(String) session.getAttribute("nome");
+		String c=(String) session.getAttribute("cognome");
 		try {
 
 			String[] dat=request.getParameter("data").split("-");
@@ -90,14 +92,14 @@ public class InserisciAutore extends HttpServlet {
 			Autore a = new Autore(nome, cognome, data);			
 			MyServiceFactory.getAutoreServiceInstance().inserisciNuovo(a);
 			
-			request.setAttribute("listaAutoriparam", MyServiceFactory.getAutoreServiceInstance().listAll());
+			request.setAttribute("listaAutoriparam", MyServiceFactory.getAutoreServiceInstance().findByParameter(n, c));
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
 			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
 			return;
 		}
-		session.setAttribute("filtro", false);
+
 		request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);
 	}
 

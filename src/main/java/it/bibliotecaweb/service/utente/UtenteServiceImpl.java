@@ -158,7 +158,7 @@ public class UtenteServiceImpl implements UtenteService {
 	}
 
 	@Override
-	public void inserisciRuolo(Utente u, Ruolo r) throws Exception {
+	public Utente inserisciRuolo(Utente u, Ruolo r) throws Exception {
 		// questo è come una connection
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
@@ -182,6 +182,7 @@ public class UtenteServiceImpl implements UtenteService {
 			//proprieta ha subito una modifica (vale anche per i Set ovviamente)
 
 			entityManager.getTransaction().commit();
+			return u;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			e.printStackTrace();

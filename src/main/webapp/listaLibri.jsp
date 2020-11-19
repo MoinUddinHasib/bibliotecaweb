@@ -60,6 +60,7 @@
 								<th>Genere</th>
 								<th>Trama</th>
 								<th>Autore</th>
+								<th>Azioni</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,12 +73,12 @@
 									<td>${a.getTrama()}</td>
 									<td>${a.getAutore().getNome()} ${a.getAutore().getCognome()}</td>
 									<td><a class="btn  btn-sm btn-outline-secondary"
-										href="LaservletpervisualizzareArticolo?id=${a.getId()}">Visualizza</a>
+										href="VisualizzaLibro?id=${a.getId()}">Visualizza</a>
 
 										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
 										href="PrepareUpdateArticolo?id=${a.getId()}">Edit</a> <a
 										class="btn btn-outline-danger btn-sm"
-										href="LaservletperrimuovereArticolo?id=${a.getId()}">Delete</a>
+										href="CancellaLibro?id=${a.getId()}">Delete</a>
 
 									</td>
 								</tr>

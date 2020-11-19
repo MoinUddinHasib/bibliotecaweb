@@ -52,6 +52,7 @@
 		                        <th>Nome</th>
 		                        <th>Cognome</th>
 		                        <th>Data di nascita</th>
+		                        <th>Azioni</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -63,11 +64,11 @@
 		                        <td>${a.getCognome()}</td>
 		                        <td>${a.getData_di_nascita()}</td>
 		                        <td>
-									<a class="btn  btn-sm btn-outline-secondary" href="LaservletpervisualizzareArticolo?id=${a.getId()}">Visualizza</a>
+									<a class="btn  btn-sm btn-outline-secondary" href="VisualizzaAutore?id=${a.getId()}">Visualizza</a>
 
 									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateArticolo?id=${a.getId()}">Edit</a>
 
-									<a class="btn btn-outline-danger btn-sm" href="LaservletperrimuovereArticolo?id=${a.getId()}">Delete</a>
+									<a class="btn btn-outline-danger btn-sm" href="CancellaAutore?id=${a.getId()}">Delete</a>
 
 								</td>
 		                    </tr>

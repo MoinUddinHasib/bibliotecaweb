@@ -14,7 +14,7 @@ public interface UtenteService extends IBaseService<Utente>{
 	
 	public Utente caricaPerUsername(String us) throws Exception ;
 	
-	public void inserisciRuolo(Utente u,Ruolo r) throws Exception;
+	public Utente inserisciRuolo(Utente u,Ruolo r) throws Exception;
 
 	public Set<Utente> findByParameter(String nome, String cognome, String username, Ruolo ruolo, String stato);
 

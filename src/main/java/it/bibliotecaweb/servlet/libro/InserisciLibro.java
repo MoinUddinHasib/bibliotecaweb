@@ -62,6 +62,11 @@ public class InserisciLibro extends HttpServlet {
 		String trama=request.getParameter("trama");
 		Autore a=null;
 		
+		String ti=(String)session.getAttribute("titolo");
+		String g=(String)session.getAttribute("genere");
+		String tr=(String)session.getAttribute("trama");
+		Autore au=(Autore)session.getAttribute("autore");
+		
 		try {
 			a=MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("autore")));
 			if(a==null)
@@ -70,7 +75,7 @@ public class InserisciLibro extends HttpServlet {
 			Libro lb=new Libro(titolo,genere,trama);
 			lb.setAutore(a);
 			MyServiceFactory.getLibroServiceInstance().inserisciNuovo(lb);
-			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().listAll();
+			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(ti, g, tr, au);
 			request.setAttribute("listaLibriparam", libri);
 		}catch (NumberFormatException e) {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
@@ -80,11 +85,7 @@ public class InserisciLibro extends HttpServlet {
 			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
 			return;
 		}
-		session.setAttribute("filtro", false);
-//		session.setAttribute("titolo", titolo);
-//		session.setAttribute("genere", genere);
-//		session.setAttribute("trama", trama);
-//		session.setAttribute("autore", a);
+
 		request.getRequestDispatcher("listaLibri.jsp").forward(request, response);
 	}
 

@@ -63,9 +63,9 @@ public class SearchUtente extends HttpServlet {
 		String username=request.getParameter("username");
 		String ruolo=request.getParameter("ruolo");
 		String stato=request.getParameter("stato");
-		
+		Ruolo r=null;
 		try {
-			Ruolo r=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(ruolo.isEmpty()?-1L:Long.parseLong(ruolo));
+			r=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(ruolo.isEmpty()?-1L:Long.parseLong(ruolo));
 			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(nome,cognome,username,r,stato);
 			request.setAttribute("listaUtentiparam", utenti);
 		}catch (NumberFormatException  e) {
@@ -75,11 +75,10 @@ public class SearchUtente extends HttpServlet {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		session.setAttribute("filtro", true);
 		session.setAttribute("nome_utente", nome);
 		session.setAttribute("cognome_utente", cognome);
 		session.setAttribute("username", username);
-		session.setAttribute("ruolo", ruolo);
+		session.setAttribute("ruolo", r);
 		session.setAttribute("stato", stato);
 
 		request.getRequestDispatcher("resultsUtenti.jsp").forward(request, response);

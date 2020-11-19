@@ -74,12 +74,12 @@
 									<td>${u.getUsername()}</td>
 									<td>${u.getStato()}</td>
 									<td><a class="btn  btn-sm btn-outline-secondary"
-										href="LaservletpervisualizzareArticolo?id=${a.getId()}">Visualizza</a>
+										href="VisualizzaUtente?id=${u.getId()}">Visualizza</a>
 
 										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
-										href="PrepareUpdateArticolo?id=${a.getId()}">Edit</a> <a
+										href="PrepareUpdateArticolo?id=${u.getId()}">Edit</a> <a
 										class="btn btn-outline-danger btn-sm"
-										href="LaservletperrimuovereArticolo?id=${a.getId()}">Delete</a>
+										href="CancellaUtente?id=${u.getId()}">Delete</a>
 
 									</td>
 								</tr>

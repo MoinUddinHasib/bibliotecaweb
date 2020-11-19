@@ -120,7 +120,7 @@ public class AutoreServiceImpl implements AutoreService {
 			// uso l'injection per il dao
 			autoreDAO.setEntityManager(entityManager);
 
-			if(o.getLibri().size()==0){
+			if(o.getLibri().size()!=0){
 				throw new Exception("Errore in rimuovi autore");
 			}
 			// eseguo quello che realmente devo fare

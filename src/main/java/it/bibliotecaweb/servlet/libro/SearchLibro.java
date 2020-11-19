@@ -73,7 +73,7 @@ public class SearchLibro extends HttpServlet {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		session.setAttribute("filtro", true);
+
 		session.setAttribute("titolo", titolo);
 		session.setAttribute("genere", genere);
 		session.setAttribute("trama", trama);

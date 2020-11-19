@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import it.bibliotecaweb.model.Ruolo;
 import it.bibliotecaweb.model.Utente;
+import it.bibliotecaweb.model.Utente.Stato;
 import it.bibliotecaweb.service.MyServiceFactory;
 
 /**
@@ -64,6 +65,12 @@ public class InserisciUtente extends HttpServlet {
 		String classic=request.getParameter("classic");
 		String guest=request.getParameter("guest");
 		String stato=request.getParameter("stato");
+		
+		String nome_utente=(String)session.getAttribute("nome_utente");
+		String cognome_utente=(String)session.getAttribute("cognome_utente");
+		String us=(String)session.getAttribute("username");
+		Ruolo r=(Ruolo)session.getAttribute("ruolo");
+		String st=(String)session.getAttribute("stato");
 
 		try {
 			Ruolo ar=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(1l);
@@ -78,25 +85,32 @@ public class InserisciUtente extends HttpServlet {
 				request.getRequestDispatcher("insertUtente.jsp").forward(request, response);
 				return;
 			}
-			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().listAll();
-			request.setAttribute("listaUtentiparam", utenti);
+			if(admin==null && classic==null && guest==null) {
+				request.setAttribute("admin", ar.getId());
+				request.setAttribute("classic", cr.getId());
+				request.setAttribute("guest", gr.getId());
+				request.setAttribute("errorMessage", "Selezionare almeno un ruolo");
+				request.getRequestDispatcher("insertUtente.jsp").forward(request, response);
+				return;
+			}
+
 			Utente u=new Utente(nome,cognome,username,password);
+			u.setStato(Stato.valueOf(stato));
 			if(admin !=null)
-				MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, ar);
+				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, ar);
 			if(classic!=null)
-				MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, cr);
+				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, cr);
 			if(guest!=null)
-				MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, gr);
-			
-		}catch (Exception e) {
+				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, gr);
+			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(nome_utente, cognome_utente, us, r, st);
+			request.setAttribute("listaUtentiparam", utenti);
+		}catch (IllegalArgumentException|NullPointerException  e) {
+			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
+			return;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		session.setAttribute("filtro", false);
-//		session.setAttribute("nome_utente", nome);
-//		session.setAttribute("cognome_utente", cognome);
-//		session.setAttribute("username", username);
-//		session.setAttribute(name, value);
-//		session.setAttribute("stato", stato);		
+		
 		request.getRequestDispatcher("resultsUtenti.jsp").forward(request, response);
 	}
 
