@@ -27,7 +27,7 @@
 	      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
 	      <p><a class="btn btn-primary btn-lg" href="SearchLibro" role="button">Ricerca libro &raquo;</a></p>
 	      <p><a class="btn btn-primary btn-lg" href="SearchAutore" role="button">Ricerca autore &raquo;</a></p>
-	      <p><a class="btn btn-primary btn-lg" href="SearchUtente" role="button">Gestione utenti &raquo;</a></p>
+	      <p><a class="btn btn-primary btn-lg" href="SearchUtente" role="button">Ricerca utente &raquo;</a></p>
 	    </div>
 	  </div>
 	  

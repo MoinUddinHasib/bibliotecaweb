@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import it.bibliotecaweb.model.Ruolo;
 import it.bibliotecaweb.model.Utente;
+import it.bibliotecaweb.model.Utente.Stato;
 
 public class UtenteDAOImpl implements UtenteDAO {
 
@@ -58,6 +60,19 @@ public class UtenteDAOImpl implements UtenteDAO {
 		TypedQuery<Utente> query = entityManager.createQuery(q,Utente.class);
 		List<Utente> ris=query.setParameter(1, us).getResultList();
 		return ris.isEmpty()?null:ris.get(0);
+	}
+
+	@Override//
+	public Set<Utente> cercaInsieme(String nome, String cognome, String username, Ruolo ruolo, String stato) {
+		String q="select distinct u from Utente u join u.ruoli r where (u.nome like ?1 or ?1 = null) and (u.cognome like ?2 or ?2 = null)"
+				+ " and (u.username like ?3 or ?3 = null) and (r.id = ?4 or ?4 = null) and (u.stato = ?5 or ?5 = null)";
+		TypedQuery<Utente> query=entityManager.createQuery(q,Utente.class);
+		query.setParameter(1, nome.isEmpty()?null:"%"+nome+"%");
+		query.setParameter(2, cognome.isEmpty()?null:"%"+cognome+"%");
+		query.setParameter(3, username.isEmpty()?null:"%"+username+"%");
+		query.setParameter(4, ruolo==null?null:ruolo.getId());
+		query.setParameter(5, stato.isEmpty()?null:Stato.valueOf(stato));
+		return query.getResultList().stream().collect(Collectors.toSet());
 	}
 
 

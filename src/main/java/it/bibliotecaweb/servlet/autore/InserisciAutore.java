@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import it.bibliotecaweb.model.Autore;
 import it.bibliotecaweb.service.MyServiceFactory;
@@ -56,7 +57,7 @@ public class InserisciAutore extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*HttpSession session = request.getSession();
+		HttpSession session = request.getSession();/*
 		if(session.getAttribute("ruolo")==null) {
 			response.sendRedirect(request.getContextPath());
 			return;
@@ -92,9 +93,11 @@ public class InserisciAutore extends HttpServlet {
 			request.setAttribute("listaAutoriparam", MyServiceFactory.getAutoreServiceInstance().listAll());
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {
-			e.printStackTrace();
+			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
+			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
+			return;
 		}
-
+		session.setAttribute("filtro", false);
 		request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);
 	}
 

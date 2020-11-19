@@ -67,7 +67,7 @@ public class UtenteServiceImpl implements UtenteService {
 
 			if(o.getNome()==null || o.getNome().isEmpty() || o.getCognome()==null ||
 					o.getCognome().isEmpty() || utenteDAO.list().contains(o)
-					|| o.getRuoli().size()==0) {
+					|| o.getRuoli().size()==0 || utenteDAO.findByUsername(o.getUsername())!=null) {
 				throw new Exception("Errore in aggiorna utente");
 			}
 			// eseguo quello che realmente devo fare
@@ -95,7 +95,7 @@ public class UtenteServiceImpl implements UtenteService {
 
 			if(o.getNome()==null || o.getNome().isEmpty() || o.getCognome()==null ||
 					o.getCognome().isEmpty() || utenteDAO.list().contains(o)
-					|| o.getRuoli().size()==0) {
+					|| o.getRuoli().size()==0 || utenteDAO.findByUsername(o.getUsername())!=null) {
 				throw new Exception("Errore in inserisci utente");
 			}
 			// eseguo quello che realmente devo fare
@@ -186,6 +186,26 @@ public class UtenteServiceImpl implements UtenteService {
 			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
+		}
+	}
+
+	@Override
+	public Set<Utente> findByParameter(String nome, String cognome, String username, Ruolo ruolo, String stato) {
+		// questo è come una connection
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			utenteDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return utenteDAO.cercaInsieme(nome,cognome,username,ruolo,stato);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			entityManager.close();
 		}
 	}
 	

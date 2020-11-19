@@ -39,7 +39,7 @@ public class SearchLibro extends HttpServlet {
 			return;
 		}*/
 		try {
-			request.setAttribute("autori", it.bibliotecaweb.service.MyServiceFactory.getAutoreServiceInstance().listAll());
+			request.setAttribute("autori", MyServiceFactory.getAutoreServiceInstance().listAll());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

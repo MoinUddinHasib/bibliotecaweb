@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.bibliotecaweb.dao.EntityManagerUtil;
 import it.bibliotecaweb.model.Utente;
 import it.bibliotecaweb.service.MyServiceFactory;
 
@@ -50,7 +49,7 @@ public class ServletLoggin extends HttpServlet {
 		HttpSession session = request.getSession();
 		try {
 			Utente uten=MyServiceFactory.getUtenteServiceInstance().caricaPerUsername(username);		
-			if(uten==null || !uten.getPassword().equals(password) || uten.getStato().equals("INATTIVO")) {
+			if(uten==null || !uten.getPassword().equals(password) || uten.getStato().equals(Utente.Stato.INATTIVO)) {
 				request.setAttribute("errorMessage", "Credenziali sbagliate o account inattivo");
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 				return;

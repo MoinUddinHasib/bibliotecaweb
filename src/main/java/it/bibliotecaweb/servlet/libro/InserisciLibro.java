@@ -33,7 +33,7 @@ public class InserisciLibro extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();/*
+		/*HttpSession session = request.getSession();
 		if(session.getAttribute("ruolo")==null) {
 			response.sendRedirect(request.getContextPath());
 			return;
@@ -76,7 +76,9 @@ public class InserisciLibro extends HttpServlet {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
 			return;
 		}catch (Exception e) {
-			e.printStackTrace();
+			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
+			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
+			return;
 		}
 		session.setAttribute("filtro", false);
 //		session.setAttribute("titolo", titolo);

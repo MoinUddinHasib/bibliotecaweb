@@ -1,4 +1,4 @@
-package it.bibliotecaweb.servlet.autore;
+package it.bibliotecaweb.servlet.utente;
 
 import java.io.IOException;
 import java.util.Set;
@@ -10,20 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.bibliotecaweb.model.Autore;
+import it.bibliotecaweb.model.Ruolo;
+import it.bibliotecaweb.model.Utente;
 import it.bibliotecaweb.service.MyServiceFactory;
 
 /**
- * Servlet implementation class SearchAutore
+ * Servlet implementation class SearchUtente
  */
-@WebServlet("/SearchAutore")
-public class SearchAutore extends HttpServlet {
+@WebServlet("/SearchUtente")
+public class SearchUtente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchAutore() {
+    public SearchUtente() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,8 +38,13 @@ public class SearchAutore extends HttpServlet {
 			response.sendRedirect(request.getContextPath());
 			return;
 		}*/
-
-		request.getRequestDispatcher("form_cercaAutore.jsp").forward(request, response);
+		try {
+			request.setAttribute("ruoli", MyServiceFactory.getRuoloServiceInstance().listAll());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.getRequestDispatcher("form_cercaUtente.jsp").forward(request, response);
 	}
 
 	/**
@@ -54,19 +60,29 @@ public class SearchAutore extends HttpServlet {
 		HttpSession session = request.getSession();
 		String nome=request.getParameter("nome");
 		String cognome=request.getParameter("cognome");
+		String username=request.getParameter("username");
+		String ruolo=request.getParameter("ruolo");
+		String stato=request.getParameter("stato");
 		
 		try {
-			
-			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
-			request.setAttribute("listaAutoriparam", autori);
-		}catch (Exception e) {
+			Ruolo r=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(ruolo.isEmpty()?-1L:Long.parseLong(ruolo));
+			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(nome,cognome,username,r,stato);
+			request.setAttribute("listaUtentiparam", utenti);
+		}catch (NumberFormatException  e) {
+			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
+			return;
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		session.setAttribute("filtro", true);
-		session.setAttribute("nome", nome);
-		session.setAttribute("cognome", cognome);
+		session.setAttribute("nome_utente", nome);
+		session.setAttribute("cognome_utente", cognome);
+		session.setAttribute("username", username);
+		session.setAttribute("ruolo", ruolo);
+		session.setAttribute("stato", stato);
 
-		request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);
+		request.getRequestDispatcher("resultsUtenti.jsp").forward(request, response);
 	}
 
 }

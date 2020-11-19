@@ -3,21 +3,20 @@
 <html lang="it">
 <head>
 <jsp:include page="./header.jsp" />
-<title>Cerca libro</title>
+<title>Inserisci nuovo</title>
 
 <!-- style per le pagine diverse dalla index -->
 <link href="./assets/css/global.css" rel="stylesheet">
 
-<!-- <script type="text/javascript" language="javascript">
+<!--     <script type="text/javascript" language="javascript">
     function validaForm() {
-    	if(isNaN(document.campi.prezzo.value)){
+    	if(document.campi.codice.value=="" || document.campi.descrizione.value=="" || document.campi.prezzo.value=="" || isNaN(document.campi.prezzo.value)){
     		alert("Campi non validi");
     		return false;
     	}
     	return true;
     }
     </script> -->
-
 </head>
 <body>
 	<jsp:include page="./navbar.jsp" />
@@ -46,52 +45,64 @@
 
 		<div class='card'>
 			<div class='card-header'>
-				<h5>Cerca libro</h5>
+				<h5>Inserisci nuovo Utente</h5>
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="SearchLibro" name="campi"
+				<form method="post" action="InserisciUtente" name="campi"
 					onSubmit="return validaForm();">
 
 					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label>Nome <span class="text-danger">*</span></label> <input
+								type="text" name="nome" id="nome" class="form-control" required>
+						</div>
 
 						<div class="form-group col-md-6">
-							<label>Titolo </label> <input type="text" name="titolo"
-								id="titolo" class="form-control"
-								>
+							<label>Cognome <span class="text-danger">*</span></label> <input
+								type="text" name="cognome" id="cognome" class="form-control"
+								required>
+						</div>
+
+						<div class="form-group col-md-6">
+							<label>Username </label> <input type="text" name="username"
+								id="username" class="form-control">
 
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Genere </label> <input type="text" name="genere"
-								id="genere" class="form-control"
-								>
+							<label>Password </label> <input type="password" name="password"
+								id="password" class="form-control">
 
 						</div>
 
-						<div class="form-group col-md-6">
-							<label>Trama </label> <input type="text" name="trama"
-								id="trama" class="form-control"
-								>
-
-						</div>
-					</div>
-
-					<div class="form-row">
 						<div class="form-group col-md-3">
-							<label>Autore </label> <select name="autore">
-								<c:forEach items="${requestScope.autori}" var="aut">
-									<option value="${aut.id }">${aut.nome }, ${aut.cognome }</option>
-								</c:forEach>
-								<option value="-1" selected>Qualsiasi Autore</option>
-							</select>
+							<fieldset>
+								<legend>Ruoli</legend>
+								<br> <input type="checkbox" name="admin" value= ${requestScope.admin } /> ADMIN
+								<br /> <input type="checkbox" name="classic" value= ${requestScope.classic } /> CLASSIC
+								<br /> <input type="checkbox" name="guest"	value= ${requestScope.guest } /> GUEST
+							</fieldset>
+
+
+
 
 						</div>
 
+						<div class="form-row">
+							<div class="form-group col-md-3">
+								<label>Stato </label> <select name="stato">
+									<option value="ATTIVO" selected>Attivo</option>
+									<option value="INATTIVO">Inattivo</option>
+								</select>
+
+							</div>
+
+						</div>
 					</div>
 
 					<button type="submit" name="submit" value="submit" id="submit"
-						class="btn btn-primary">Cerca</button>
+						class="btn btn-primary">Conferma</button>
 
 
 				</form>
