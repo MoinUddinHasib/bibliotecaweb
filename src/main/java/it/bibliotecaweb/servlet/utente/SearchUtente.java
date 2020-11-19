@@ -33,15 +33,9 @@ public class SearchUtente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
 		try {
 			request.setAttribute("ruoli", MyServiceFactory.getRuoloServiceInstance().listAll());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		request.getRequestDispatcher("form_cercaUtente.jsp").forward(request, response);
@@ -51,12 +45,6 @@ public class SearchUtente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
 		HttpSession session = request.getSession();
 		String nome=request.getParameter("nome");
 		String cognome=request.getParameter("cognome");

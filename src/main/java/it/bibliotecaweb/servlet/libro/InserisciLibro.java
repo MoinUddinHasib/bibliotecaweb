@@ -33,11 +33,6 @@ public class InserisciLibro extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
 		try {
 			request.setAttribute("autori", it.bibliotecaweb.service.MyServiceFactory.getAutoreServiceInstance().listAll());
 		} catch (Exception e) {
@@ -50,12 +45,7 @@ public class InserisciLibro extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
+
 		HttpSession session = request.getSession();
 		String titolo=request.getParameter("titolo");
 		String genere=request.getParameter("genere");
@@ -71,6 +61,9 @@ public class InserisciLibro extends HttpServlet {
 			a=MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("autore")));
 			if(a==null)
 				throw new NumberFormatException();
+			
+			if(titolo.isEmpty() || genere.isEmpty() || trama.isEmpty())
+				throw new Exception("Errori di validazioni");
 
 			Libro lb=new Libro(titolo,genere,trama);
 			lb.setAutore(a);
@@ -82,7 +75,7 @@ public class InserisciLibro extends HttpServlet {
 			return;
 		}catch (Exception e) {
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
-			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
+			request.getRequestDispatcher("insertLibro.jsp").forward(request, response);
 			return;
 		}
 

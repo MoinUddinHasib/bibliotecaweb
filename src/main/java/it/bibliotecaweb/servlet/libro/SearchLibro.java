@@ -33,11 +33,6 @@ public class SearchLibro extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
 		try {
 			request.setAttribute("autori", MyServiceFactory.getAutoreServiceInstance().listAll());
 		} catch (Exception e) {
@@ -50,12 +45,6 @@ public class SearchLibro extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
 		HttpSession session = request.getSession();
 		String titolo=request.getParameter("titolo");
 		String genere=request.getParameter("genere");

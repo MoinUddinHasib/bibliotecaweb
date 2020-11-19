@@ -76,7 +76,7 @@
 										href="VisualizzaLibro?id=${a.getId()}">Visualizza</a>
 
 										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
-										href="PrepareUpdateArticolo?id=${a.getId()}">Edit</a> <a
+										href="UpdateLibro?id=${a.getId()}">Edit</a> <a
 										class="btn btn-outline-danger btn-sm"
 										href="CancellaLibro?id=${a.getId()}">Delete</a>
 

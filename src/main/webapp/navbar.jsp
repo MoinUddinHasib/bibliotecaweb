@@ -31,7 +31,7 @@
         <a class="nav-link" href="ServletLogOut">Log-Out <span class="sr-only">(current)</span></a>
         </c:if>
       </li>
-			<li>Benvenuto   ${sessionScope.nome } ${sessionScope.cognome } ${sessionScope.username }</li>
+			<li>Benvenuto   ${sessionScope.nome_login } ${sessionScope.cognome_login } ${sessionScope.username_login }</li>
 		</ul>
 		
 		<form class="form-inline my-2 my-lg-0">

@@ -44,10 +44,11 @@
 		    	
 		    	<dl class="row">
 				  <dt class="col-sm-3 text-right">Ruoli:</dt>
-				  
+				  <ul>
 				  <c:forEach items="${requestScope.ruoli}" var="r">
-					<dd >${r.codice }: ${r.descrizione };;;;;;;;;;;;;;;;;;;;;</dd>
+					<li> <dd >${r.codice }: ${r.descrizione } </dd></li>
 				  </c:forEach>
+				  </ul>
 		    	</dl>
 		    	
 		    	<dl class="row">

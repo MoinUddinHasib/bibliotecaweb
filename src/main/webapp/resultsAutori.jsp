@@ -66,7 +66,7 @@
 		                        <td>
 									<a class="btn  btn-sm btn-outline-secondary" href="VisualizzaAutore?id=${a.getId()}">Visualizza</a>
 
-									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateArticolo?id=${a.getId()}">Edit</a>
+									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="UpdateAutore?id=${a.getId()}">Edit</a>
 
 									<a class="btn btn-outline-danger btn-sm" href="CancellaAutore?id=${a.getId()}">Delete</a>
 

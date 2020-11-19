@@ -7,16 +7,6 @@
 
 <!-- style per le pagine diverse dalla index -->
 <link href="./assets/css/global.css" rel="stylesheet">
-
-<!--     <script type="text/javascript" language="javascript">
-    function validaForm() {
-    	if(document.campi.codice.value=="" || document.campi.descrizione.value=="" || document.campi.prezzo.value=="" || isNaN(document.campi.prezzo.value)){
-    		alert("Campi non validi");
-    		return false;
-    	}
-    	return true;
-    }
-    </script> -->
 </head>
 <body>
 	<jsp:include page="./navbar.jsp" />
@@ -49,29 +39,27 @@
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="InserisciLibro" name="campi"
-					onSubmit="return validaForm();">
+				<form method="post" action="InserisciLibro" name="campi">
 
 					<div class="form-row">
 
 						<div class="form-group col-md-6">
 							<label>Titolo </label> <input type="text" name="titolo"
-								id="titolo" class="form-control"
-								>
+								id="titolo" class="form-control" required>
 
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Genere </label> <input type="text" name="genere"
 								id="genere" class="form-control"
-								>
+								required>
 
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Trama </label> <input type="text" name="trama"
 								id="trama" class="form-control"
-								>
+								required>
 
 						</div>
 					</div>

@@ -30,11 +30,6 @@ public class VisualizzaUtente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
 		Utente a = null;
 		try {
 			a = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("id")));

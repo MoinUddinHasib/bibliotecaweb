@@ -3,7 +3,7 @@
 <html lang="it">
 <head>
 <jsp:include page="./header.jsp" />
-<title>Inserisci nuovo</title>
+<title>Modifica Utente</title>
 
 <!-- style per le pagine diverse dalla index -->
 <link href="./assets/css/global.css" rel="stylesheet">
@@ -35,54 +35,78 @@
 
 		<div class='card'>
 			<div class='card-header'>
-				<h5>Inserisci nuovo Utente</h5>
+				<h5>Modifica Utente</h5>
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="InserisciUtente" name="campi">
+				<form method="post" action="UpdateUtente" name="campi"
+					onSubmit="return validaForm();">
+
+					<input type="hidden" name="id" value="${ requestScope.id}">
+					<input type="hidden" name="last" value="${ requestScope.last}">
 
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label>Nome <span class="text-danger">*</span></label> <input
-								type="text" name="nome" id="nome" class="form-control" required>
+								type="text" name="nome" id="nome" class="form-control"
+								value="${requestScope.nome}" required>
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Cognome <span class="text-danger">*</span></label> <input
 								type="text" name="cognome" id="cognome" class="form-control"
-								required>
+								value="${requestScope.cognome}" required>
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Username </label> <input type="text" name="username"
-								id="username" class="form-control" required>
+								value="${requestScope.username}" id="username"
+								class="form-control" required>
 
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Password </label> <input type="password" name="password"
-								id="password" class="form-control" required>
+							<label>Password </label> <input type="text" name="password"
+								value="${requestScope.password}" id="password"
+								class="form-control" required>
 
 						</div>
 
 						<div class="form-group col-md-3">
 							<fieldset>
 								<legend>Ruoli</legend>
-								<br> <input type="checkbox" name="admin" value= ${requestScope.admin } /> ADMIN
-								<br /> <input type="checkbox" name="classic" value= ${requestScope.classic } /> CLASSIC
-								<br /> <input type="checkbox" name="guest"	value= ${requestScope.guest } /> GUEST
+								<br> <input type="checkbox" name="admin"
+									value=${requestScope.admin }
+									<c:if test = "${requestScope.cond_admin == true}">
+         								checked
+      								</c:if> />
+								ADMIN <br /> <input type="checkbox" name="classic"
+									value=${requestScope.classic }
+									<c:if test = "${requestScope.cond_classic == true}">
+         								checked
+      								</c:if> />
+								CLASSIC <br /> <input type="checkbox" name="guest"
+									value=${requestScope.guest }
+									<c:if test = "${requestScope.cond_guest == true}">
+         								checked
+      								</c:if> />
+								GUEST
 							</fieldset>
-
-
-
-
 						</div>
 
 						<div class="form-row">
 							<div class="form-group col-md-3">
 								<label>Stato </label> <select name="stato">
-									<option value="ATTIVO" selected>Attivo</option>
-									<option value="INATTIVO">Inattivo</option>
+
+									<option value="ATTIVO"
+										<c:if test = "${requestScope.stato == 'ATTIVO'}">
+         								selected
+      								</c:if>>Attivo</option>
+									<option value="INATTIVO"
+										<c:if test = "${requestScope.stato == 'INATTIVO'}">
+         								selected
+      								</c:if>>Inattivo</option>
+
 								</select>
 
 							</div>

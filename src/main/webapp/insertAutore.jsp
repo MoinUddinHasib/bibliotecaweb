@@ -8,15 +8,6 @@
 <!-- style per le pagine diverse dalla index -->
 <link href="./assets/css/global.css" rel="stylesheet">
 
-<!--     <script type="text/javascript" language="javascript">
-    function validaForm() {
-    	if(document.campi.codice.value=="" || document.campi.descrizione.value=="" || document.campi.prezzo.value=="" || isNaN(document.campi.prezzo.value)){
-    		alert("Campi non validi");
-    		return false;
-    	}
-    	return true;
-    }
-    </script> -->
 </head>
 <body>
 	<jsp:include page="./navbar.jsp" />
@@ -49,23 +40,22 @@
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="InserisciAutore" name="campi"
-					onSubmit="return validaForm();">
+				<form method="post" action="InserisciAutore" name="campi">
 
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label>Nome <span class="text-danger">*</span></label> <input
+							<label>Nome </label> <input
 								type="text" name="nome" id="nome" class="form-control" required>
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Cognome <span class="text-danger">*</span></label> <input
+							<label>Cognome </label> <input
 								type="text" name="cognome" id="cognome" class="form-control"
 								required>
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Data di nascita <span class="text-danger">*</span></label>
+							<label>Data di nascita </label>
 							<input type="date" class="form-control" name="data" id="data"
 								required>
 						</div>

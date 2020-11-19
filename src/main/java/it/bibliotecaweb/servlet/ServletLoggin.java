@@ -30,20 +30,13 @@ public class ServletLoggin extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {/*
-		HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}
-		request.getRequestDispatcher("EntryPage.jsp").forward(request, response);*/
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String username=request.getParameter("username");
 		String password = request.getParameter("password");
 		HttpSession session = request.getSession();
@@ -54,10 +47,10 @@ public class ServletLoggin extends HttpServlet {
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 				return;
 			}
-			session.setAttribute("nome", uten.getNome());
-			session.setAttribute("cognome", uten.getCognome());
-			session.setAttribute("username", uten.getUsername());
-			session.setAttribute("stato", uten.getStato());
+			session.setAttribute("nome_login", uten.getNome());
+			session.setAttribute("cognome_login", uten.getCognome());
+			session.setAttribute("username_login", uten.getUsername());
+			session.setAttribute("stato_login", uten.getStato());
 			request.getRequestDispatcher("EntryPage.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

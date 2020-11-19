@@ -33,23 +33,6 @@ public class InserisciAutore extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*HttpSession session = request.getSession();
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}
-		session = request.getSession();
-		if(session.getAttribute("ruolo").equals("GUEST")) {
-			response.sendRedirect(request.getContextPath()+"/ListArticoliServlet");
-			return;
-		}
-		request.setAttribute("fil", request.getParameter("fil"));
-		request.setAttribute("co", request.getParameter("co"));
-		request.setAttribute("de", request.getParameter("de"));
-		request.setAttribute("pr", request.getParameter("pr"));
-		request.setAttribute("cat", request.getParameter("cat"));
-		*/
-
 		request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
 	}
 
@@ -57,18 +40,17 @@ public class InserisciAutore extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();/*
-		if(session.getAttribute("ruolo")==null) {
-			response.sendRedirect(request.getContextPath());
-			return;
-		}*/
-		// validiamo input
+		HttpSession session = request.getSession();
+
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		LocalDate data=null;
 		String n=(String) session.getAttribute("nome");
 		String c=(String) session.getAttribute("cognome");
 		try {
+			
+			if(nome.isEmpty() || cognome.isEmpty())
+				throw new NumberFormatException("nome o cognome vuoto");
 
 			String[] dat=request.getParameter("data").split("-");
 			dat[2]=String.valueOf(Integer.parseInt(dat[2])+1);
@@ -76,13 +58,6 @@ public class InserisciAutore extends HttpServlet {
 			data = LocalDate.parse(dat[0]+"-"+dat[1]+"-"+dat[2]);
 			
 		} catch (DateTimeParseException|NumberFormatException e) {
-			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
-			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
-			return;
-		}
-
-
-		if (nome.isEmpty() || cognome.isEmpty() ) {
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
 			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
 			return;
