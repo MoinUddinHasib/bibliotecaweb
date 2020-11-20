@@ -43,13 +43,12 @@ body {
 		</div>
 		<div class='card-body'>
 
-			<form method="post" action="ServletLoggin" name="campi"
-				onSubmit="return validaForm();">
+			<form method="post" action="ServletLoggin" name="campi">
 
 				<div class="form-row">
 
 					<div class="form-group col-md-6">
-						<label>Username<span class="text-danger">*</span></label> <input
+						<label>Username </label> <input
 							type="text" value="${requestScope.username}" name="username"
 							id="username" class="form-control"
 							placeholder="Inserire username" required>
@@ -59,7 +58,7 @@ body {
 
 				<div class="form-row">
 					<div class="form-group col-md-3">
-						<label>Password <span class="text-danger">*</span></label> <input
+						<label>Password </label> <input
 							type="password" value="${requestScope.password}"
 							class="form-control" name="password" id="password"
 							placeholder="Inserire password" required>

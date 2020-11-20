@@ -38,6 +38,8 @@ public class CancellaAutore extends HttpServlet {
 		String cognome=(String) session.getAttribute("cognome");
 		try {
 			Autore c = MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("id")));
+			if(c.getLibri().size()>0)
+				throw new Exception("Autore ha dei libri");
 			MyServiceFactory.getAutoreServiceInstance().rimuovi(c);	
 			
 			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
@@ -48,7 +50,11 @@ public class CancellaAutore extends HttpServlet {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
 			return;
 		}  catch (Exception e) {
-			e.printStackTrace();
+			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
+			request.setAttribute("listaAutoriparam", autori);
+			request.setAttribute("errorMessage", "L'autore ha dei libri quindi non può essere cancellato");
+			request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);
+			return;
 		}
 	}
 

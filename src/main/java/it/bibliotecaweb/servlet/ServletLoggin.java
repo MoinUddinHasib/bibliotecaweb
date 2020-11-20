@@ -31,6 +31,13 @@ public class ServletLoggin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("stato_login")==null) {
+			response.sendRedirect(request.getContextPath());
+			session.invalidate();
+			return;
+		}
+		request.getRequestDispatcher("EntryPage.jsp").forward(request, response);
 	}
 
 	/**
@@ -44,6 +51,7 @@ public class ServletLoggin extends HttpServlet {
 			Utente uten=MyServiceFactory.getUtenteServiceInstance().caricaPerUsername(username);		
 			if(uten==null || !uten.getPassword().equals(password) || uten.getStato().equals(Utente.Stato.INATTIVO)) {
 				request.setAttribute("errorMessage", "Credenziali sbagliate o account inattivo");
+				session.invalidate();
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 				return;
 			}
@@ -51,6 +59,7 @@ public class ServletLoggin extends HttpServlet {
 			session.setAttribute("cognome_login", uten.getCognome());
 			session.setAttribute("username_login", uten.getUsername());
 			session.setAttribute("stato_login", uten.getStato());
+			session.setAttribute("ruoli", uten.getRuoli());
 			request.getRequestDispatcher("EntryPage.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

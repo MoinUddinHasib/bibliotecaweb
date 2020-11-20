@@ -11,7 +11,7 @@
 	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active"><a class="nav-link"
-				href="${pageContext.request.contextPath}/EntryPage.jsp">Home <span
+				href="${pageContext.request.contextPath}/ServletLoggin">Home <span
 					class="sr-only">(current)</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 			<li class="nav-item"><a class="nav-link disabled" href="#"
@@ -27,7 +27,7 @@
 				</div></li>
 			<li class="nav-item active"></li>
 			<li class="nav-item active">
-      <c:if test="${ sessionScope.stato != ATTIVO}">
+      <c:if test="${ sessionScope.stato_login != null}">
         <a class="nav-link" href="ServletLogOut">Log-Out <span class="sr-only">(current)</span></a>
         </c:if>
       </li>

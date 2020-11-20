@@ -57,7 +57,11 @@ public class InserisciAutore extends HttpServlet {
 
 			data = LocalDate.parse(dat[0]+"-"+dat[1]+"-"+dat[2]);
 			
-		} catch (DateTimeParseException|NumberFormatException e) {
+		} catch (ArrayIndexOutOfBoundsException e) {
+			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
+			return;
+		}catch (DateTimeParseException|NumberFormatException e) {
+		
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
 			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
 			return;
