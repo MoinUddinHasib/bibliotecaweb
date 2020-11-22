@@ -52,9 +52,11 @@ public class AutoreDAOImpl implements AutoreDAO {
 	}
 
 	@Override
-	public Set<Autore> cercaInsieme(String nome, String cognome) {
+	public Set<Autore> cercaInsieme(Autore a) {
 		String q ="from Autore a where (a.nome like ?1 or ?1 =null) and (a.cognome like ?2 or ?2 = null)";
 		TypedQuery<Autore> query=entityManager.createQuery(q,Autore.class);
+		String nome=a.getNome();
+		String cognome=a.getCognome();
 		query.setParameter(1, nome.isEmpty()?null:"%"+nome+"%");
 		query.setParameter(2, cognome.isEmpty()?null:"%"+cognome+"%");
 

@@ -49,7 +49,7 @@ public class InserisciAutore extends HttpServlet {
 		String c=(String) session.getAttribute("cognome");
 		try {
 			
-			if(nome.isEmpty() || cognome.isEmpty())
+			if(nome==null || cognome==null || nome.isEmpty() || cognome.isEmpty())
 				throw new NumberFormatException("nome o cognome vuoto");
 
 			String[] dat=request.getParameter("data").split("-");
@@ -61,7 +61,6 @@ public class InserisciAutore extends HttpServlet {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
 			return;
 		}catch (DateTimeParseException|NumberFormatException e) {
-		
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
 			request.getRequestDispatcher("insertAutore.jsp").forward(request, response);
 			return;
@@ -70,8 +69,8 @@ public class InserisciAutore extends HttpServlet {
 		try {
 			Autore a = new Autore(nome, cognome, data);			
 			MyServiceFactory.getAutoreServiceInstance().inserisciNuovo(a);
-			
-			request.setAttribute("listaAutoriparam", MyServiceFactory.getAutoreServiceInstance().findByParameter(n, c));
+			Autore a1=new Autore(nome,cognome,null);
+			request.setAttribute("listaAutoriparam", MyServiceFactory.getAutoreServiceInstance().findByParameter(a1));
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");

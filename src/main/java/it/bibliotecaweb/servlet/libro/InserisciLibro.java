@@ -60,15 +60,18 @@ public class InserisciLibro extends HttpServlet {
 		try {
 			a=MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("autore")));
 			if(a==null)
-				throw new NumberFormatException();
+				throw new NumberFormatException("Nessun autore");
 			
-			if(titolo.isEmpty() || genere.isEmpty() || trama.isEmpty())
+			if(titolo==null || genere==null || trama==null||titolo.isEmpty() || genere.isEmpty() || trama.isEmpty())
 				throw new Exception("Errori di validazioni");
 
 			Libro lb=new Libro(titolo,genere,trama);
 			lb.setAutore(a);
 			MyServiceFactory.getLibroServiceInstance().inserisciNuovo(lb);
-			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(ti, g, tr, au);
+			
+			Libro l=new Libro(ti,g,tr);
+			l.setAutore(au);
+			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(l);
 			request.setAttribute("listaLibriparam", libri);
 		}catch (NumberFormatException e) {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);

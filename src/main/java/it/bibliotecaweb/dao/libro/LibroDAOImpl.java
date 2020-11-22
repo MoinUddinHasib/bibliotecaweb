@@ -53,9 +53,13 @@ public class LibroDAOImpl implements LibroDAO {
 	}
 
 	@Override
-	public Set<Libro> prendiInsieme(String titolo, String genere, String trama, Autore a) {
+	public Set<Libro> prendiInsieme(Libro l) {
 		String q ="from Libro l where (l.titolo like ?1 or ?1 = null) and (l.genere like ?2 or ?2 = null) and (l.trama like ?3 or ?3 = null) and (l.autore.id=?4 or ?4 = null)";
 		TypedQuery<Libro> query=entityManager.createQuery(q,Libro.class);
+		String titolo=l.getTitolo();
+		String genere=l.getGenere();
+		String trama=l.getTrama();
+		Autore a=l.getAutore();
 		query.setParameter(1, titolo.isEmpty()?null:"%"+titolo+"%");
 		query.setParameter(2, genere.isEmpty()?null:"%"+genere+"%");
 		query.setParameter(3, trama.isEmpty()?null:"%"+trama+"%");

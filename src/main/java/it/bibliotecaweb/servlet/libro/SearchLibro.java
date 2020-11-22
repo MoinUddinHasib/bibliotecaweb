@@ -33,6 +33,10 @@ public class SearchLibro extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("titolo")!=null) {
+			doPost(request, response);
+			return;
+		}
 		try {
 			request.setAttribute("autori", MyServiceFactory.getAutoreServiceInstance().listAll());
 		} catch (Exception e) {
@@ -49,12 +53,18 @@ public class SearchLibro extends HttpServlet {
 		String titolo=request.getParameter("titolo");
 		String genere=request.getParameter("genere");
 		String trama=request.getParameter("trama");
+		Long id_a;
 		Autore a=null;
 		
 		try {
-			a=MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("autore")));
-			
-			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(titolo,genere,trama,a);
+			if (request.getParameter("autore").isEmpty())
+				id_a = -1l;
+			else
+				id_a = Long.parseLong(request.getParameter("autore"));
+			a=MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(id_a);
+			Libro l=new Libro(titolo,genere,trama);
+			l.setAutore(a);
+			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(l);
 			request.setAttribute("listaLibriparam", libri);
 		}catch (NumberFormatException e) {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);

@@ -25,7 +25,6 @@ public class RuoloServiceImpl implements RuoloService {
 			return ruoloDAO.list();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -45,7 +44,6 @@ public class RuoloServiceImpl implements RuoloService {
 			return ruoloDAO.get(id);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -73,7 +71,6 @@ public class RuoloServiceImpl implements RuoloService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -100,7 +97,6 @@ public class RuoloServiceImpl implements RuoloService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -126,7 +122,6 @@ public class RuoloServiceImpl implements RuoloService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}

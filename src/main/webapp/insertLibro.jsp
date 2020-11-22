@@ -51,15 +51,13 @@
 
 						<div class="form-group col-md-6">
 							<label>Genere </label> <input type="text" name="genere"
-								id="genere" class="form-control"
-								required>
+								id="genere" class="form-control" required>
 
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Trama </label> <input type="text" name="trama"
-								id="trama" class="form-control"
-								required>
+							<label>Trama </label> <input type="text" name="trama" id="trama"
+								class="form-control" required>
 
 						</div>
 					</div>
@@ -68,14 +66,17 @@
 						<div class="form-group col-md-3">
 							<label>Autore </label> <select name="autore">
 								<c:forEach items="${requestScope.autori}" var="aut">
-									<option value="${aut.id }">${aut.nome }, ${aut.cognome }</option>
+									<option value="${aut.id }">${aut.nome },${aut.cognome }</option>
 								</c:forEach>
 							</select>
 
 						</div>
 
 					</div>
-
+					<a
+						href="${pageContext.request.contextPath}/SearchLibro?titolo=${sessionScope.titolo}&genere=${sessionScope.genere}&
+				trama=${sessionScope.trama}&autore=${sessionScope.autore.getId()}"
+						class='btn btn-outline-secondary' style='width: 80px'> Back </a>
 					<button type="submit" name="submit" value="submit" id="submit"
 						class="btn btn-primary">Conferma</button>
 

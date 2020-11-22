@@ -45,7 +45,10 @@
 				  <dt class="col-sm-3 text-right">Autore:</dt>
 				  <dd class="col-sm-9">${requestScope.nome_autore} ${requestScope.cognome_autore}</dd>
 		    	</dl>
-		    	
+		    	<a href="${pageContext.request.contextPath}/SearchLibro?titolo=${sessionScope.titolo}&genere=${sessionScope.genere}&
+				trama=${sessionScope.trama}&autore=${sessionScope.autore.getId()}" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 		    </div>
 		    
 		</div>	

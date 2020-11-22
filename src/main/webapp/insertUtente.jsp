@@ -68,28 +68,22 @@
 						<div class="form-group col-md-3">
 							<fieldset>
 								<legend>Ruoli</legend>
-								<br> <input type="checkbox" name="admin" value= ${requestScope.admin } /> ADMIN
-								<br /> <input type="checkbox" name="classic" value= ${requestScope.classic } /> CLASSIC
-								<br /> <input type="checkbox" name="guest"	value= ${requestScope.guest } /> GUEST
+								<br> <input type="checkbox" name="admin"
+									value=${requestScope.admin } /> ADMIN <br /> <input
+									type="checkbox" name="classic" value=${requestScope.classic } />
+								CLASSIC <br /> <input type="checkbox" name="guest"
+									value=${requestScope.guest } /> GUEST
 							</fieldset>
 
 
 
 
 						</div>
-
-						<div class="form-row">
-							<div class="form-group col-md-3">
-								<label>Stato </label> <select name="stato">
-									<option value="ATTIVO" selected>Attivo</option>
-									<option value="INATTIVO">Inattivo</option>
-								</select>
-
-							</div>
-
-						</div>
 					</div>
-
+					<a
+						href="${pageContext.request.contextPath}/SearchUtente?nome=${sessionScope.nome_utente}&cognome=${sessionScope.cognome_utente}&
+				username=${sessionScope.username}&ruolo=${sessionScope.autore.getId()}&stato=${sessionScope.stato}"
+						class='btn btn-outline-secondary' style='width: 80px'> Back </a>
 					<button type="submit" name="submit" value="submit" id="submit"
 						class="btn btn-primary">Conferma</button>
 

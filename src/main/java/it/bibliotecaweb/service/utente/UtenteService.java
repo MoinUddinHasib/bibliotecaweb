@@ -12,10 +12,10 @@ public interface UtenteService extends IBaseService<Utente>{
 	// questo mi serve per injection
 	public void setUtenteDao(UtenteDAO utenteDao);
 	
-	public Utente caricaPerUsername(String us) throws Exception ;
+	public Utente caricaPerUsername(String us);
 	
 	public Utente inserisciRuolo(Utente u,Ruolo r) throws Exception;
 
-	public Set<Utente> findByParameter(String nome, String cognome, String username, Ruolo ruolo, String stato);
+	public Set<Utente> findByParameter(Utente u);
 
 }

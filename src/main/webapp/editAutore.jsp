@@ -64,9 +64,13 @@
 					</div>
 				</div>
 
-
+				<a href="${pageContext.request.contextPath}/SearchAutore?nome=${sessionScope.nome}&cognome=${sessionScope.cognome}" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 				<button type="submit" name="submit" value="submit" id="submit"
 					class="btn btn-primary">Conferma</button>
+					
+					
 
 			</form>
 

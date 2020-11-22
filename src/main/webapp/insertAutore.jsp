@@ -44,23 +44,23 @@
 
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label>Nome </label> <input
-								type="text" name="nome" id="nome" class="form-control" required>
+							<label>Nome </label> <input type="text" name="nome" id="nome"
+								class="form-control" required>
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Cognome </label> <input
-								type="text" name="cognome" id="cognome" class="form-control"
-								required>
+							<label>Cognome </label> <input type="text" name="cognome"
+								id="cognome" class="form-control" required>
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Data di nascita </label>
-							<input type="date" class="form-control" name="data" id="data"
-								required>
+							<label>Data di nascita </label> <input type="date"
+								class="form-control" name="data" id="data" required>
 						</div>
 					</div>
-
+					<a
+						href="${pageContext.request.contextPath}/SearchAutore?nome=${sessionScope.nome}&cognome=${sessionScope.cognome}"
+						class='btn btn-outline-secondary' style='width: 80px'> Back </a>
 					<button type="submit" name="submit" value="submit" id="submit"
 						class="btn btn-primary">Conferma</button>
 

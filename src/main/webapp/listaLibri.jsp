@@ -49,8 +49,11 @@
 			</div>
 
 			<div class='card-body'>
+			<a href="${pageContext.request.contextPath}/SearchLibro" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 				<a class="btn btn-primary " href="InserisciLibro">Aggiungi libro</a>
-
+				
 				<div class='table-responsive'>
 					<table class='table table-striped '>
 						<thead>
@@ -75,11 +78,13 @@
 									<td><a class="btn  btn-sm btn-outline-secondary"
 										href="VisualizzaLibro?id=${a.getId()}">Visualizza</a>
 
+										<c:if test = "${(sessionScope.admin_cond) || (sessionScope.classic_cond)}">
 										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
-										href="UpdateLibro?id=${a.getId()}">Edit</a> <a
-										class="btn btn-outline-danger btn-sm"
-										href="CancellaLibro?id=${a.getId()}">Delete</a>
-
+										href="UpdateLibro?id=${a.getId()}">Edit</a> 
+										
+										<a class="btn btn-outline-danger btn-sm"
+										href="${pageContext.request.contextPath}/confermaLibro.jsp?id=${a.getId()}">Delete</a>
+										</c:if>
 									</td>
 								</tr>
 							</c:forEach>

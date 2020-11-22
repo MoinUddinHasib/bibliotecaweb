@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import it.bibliotecaweb.model.Ruolo;
 import it.bibliotecaweb.model.Utente;
+import it.bibliotecaweb.model.Utente.Stato;
 import it.bibliotecaweb.service.MyServiceFactory;
 
 /**
@@ -33,6 +34,10 @@ public class SearchUtente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("nome")!=null) {
+			doPost(request, response);
+			return;
+		}
 		try {
 			request.setAttribute("ruoli", MyServiceFactory.getRuoloServiceInstance().listAll());
 		} catch (Exception e) {
@@ -54,7 +59,11 @@ public class SearchUtente extends HttpServlet {
 		Ruolo r=null;
 		try {
 			r=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(ruolo.isEmpty()?-1L:Long.parseLong(ruolo));
-			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(nome,cognome,username,r,stato);
+			Utente u=new Utente(nome,cognome,username,null);
+			if(r!=null)
+				u.getRuoli().add(r);
+			u.setStato((stato==null || stato.isEmpty())?null:Stato.valueOf(stato));
+			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(u);
 			request.setAttribute("listaUtentiparam", utenti);
 		}catch (NumberFormatException  e) {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);

@@ -39,21 +39,19 @@
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="UpdateUtente" name="campi"
-					onSubmit="return validaForm();">
+				<form method="post" action="UpdateUtente" name="campi">
 
 					<input type="hidden" name="id" value="${ requestScope.id}">
-					<input type="hidden" name="last" value="${ requestScope.last}">
 
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label>Nome <span class="text-danger">*</span></label> <input
+							<label>Nome </label> <input
 								type="text" name="nome" id="nome" class="form-control"
 								value="${requestScope.nome}" required>
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Cognome <span class="text-danger">*</span></label> <input
+							<label>Cognome </label> <input
 								type="text" name="cognome" id="cognome" class="form-control"
 								value="${requestScope.cognome}" required>
 						</div>
@@ -61,13 +59,6 @@
 						<div class="form-group col-md-6">
 							<label>Username </label> <input type="text" name="username"
 								value="${requestScope.username}" id="username"
-								class="form-control" required>
-
-						</div>
-
-						<div class="form-group col-md-6">
-							<label>Password </label> <input type="text" name="password"
-								value="${requestScope.password}" id="password"
 								class="form-control" required>
 
 						</div>
@@ -113,10 +104,13 @@
 
 						</div>
 					</div>
-
+					<a href="${pageContext.request.contextPath}/SearchUtente?nome=${sessionScope.nome_utente}&cognome=${sessionScope.cognome_utente}&
+				username=${sessionScope.username}&ruolo=${sessionScope.ruolo.getId()}&stato=${sessionScope.stato}" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 					<button type="submit" name="submit" value="submit" id="submit"
 						class="btn btn-primary">Conferma</button>
-
+				
 
 				</form>
 

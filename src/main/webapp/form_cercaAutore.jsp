@@ -57,11 +57,13 @@
 
 					</div>
 
-
+					<a href="${pageContext.request.contextPath}/ServletLoggin" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 					<button type="submit" name="submit" value="submit" id="submit"
 						class="btn btn-primary">Cerca</button>
 
-
+				
 				</form>
 
 

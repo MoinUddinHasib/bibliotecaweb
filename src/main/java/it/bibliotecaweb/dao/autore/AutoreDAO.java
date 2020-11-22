@@ -7,6 +7,6 @@ import it.bibliotecaweb.model.Autore;
 
 public interface AutoreDAO extends IBaseDAO<Autore> {
 
-	Set<Autore> cercaInsieme(String nome, String cognome);
+	Set<Autore> cercaInsieme(Autore a);
 
 }

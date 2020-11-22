@@ -43,7 +43,9 @@ public class CancellaLibro extends HttpServlet {
 			Libro c = MyServiceFactory.getLibroServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("id")));
 			MyServiceFactory.getLibroServiceInstance().rimuovi(c);	
 			
-			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(titolo,genere,trama,a);
+			Libro l=new Libro(titolo,genere,trama);
+			l.setAutore(a);
+			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(l);
 			request.setAttribute("listaLibriparam", libri);
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 			request.getRequestDispatcher("listaLibri.jsp").forward(request, response);

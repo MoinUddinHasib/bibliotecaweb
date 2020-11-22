@@ -40,7 +40,9 @@
 				  <dt class="col-sm-3 text-right">Data di nascita:</dt>
 				  <dd class="col-sm-9">${requestScope.data_di_nascita}</dd>
 		    	</dl>
-		    	
+		    	<a href="${pageContext.request.contextPath}/SearchAutore?nome=${sessionScope.nome}&cognome=${sessionScope.cognome}" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 		    </div>
 		    
 		</div>	

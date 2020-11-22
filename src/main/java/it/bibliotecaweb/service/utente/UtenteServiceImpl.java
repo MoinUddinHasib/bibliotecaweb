@@ -26,7 +26,6 @@ public class UtenteServiceImpl implements UtenteService {
 			return utenteDAO.list();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -46,7 +45,6 @@ public class UtenteServiceImpl implements UtenteService {
 			return utenteDAO.get(id);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -76,7 +74,6 @@ public class UtenteServiceImpl implements UtenteService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -104,7 +101,6 @@ public class UtenteServiceImpl implements UtenteService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -127,7 +123,6 @@ public class UtenteServiceImpl implements UtenteService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -138,7 +133,7 @@ public class UtenteServiceImpl implements UtenteService {
 	}
 	
 	@Override
-	public Utente caricaPerUsername(String us) throws Exception {
+	public Utente caricaPerUsername(String us){
 		// questo è come una connection
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
@@ -150,7 +145,6 @@ public class UtenteServiceImpl implements UtenteService {
 			return utenteDAO.findByUsername(us);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -174,6 +168,10 @@ public class UtenteServiceImpl implements UtenteService {
 			u = entityManager.merge(u);
 			r = entityManager.merge(r);
 			
+			if(u.getRuoli().contains(r)) {
+				throw new Exception("Ruolo già presente");
+			}
+			
 			u.getRuoli().add(r);
 			r.getUtenti().add(u);
 			//l'update non viene richiamato a mano in quanto 
@@ -185,13 +183,12 @@ public class UtenteServiceImpl implements UtenteService {
 			return u;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
 
 	@Override
-	public Set<Utente> findByParameter(String nome, String cognome, String username, Ruolo ruolo, String stato) {
+	public Set<Utente> findByParameter(Utente u) {
 		// questo è come una connection
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
@@ -200,10 +197,9 @@ public class UtenteServiceImpl implements UtenteService {
 			utenteDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
-			return utenteDAO.cercaInsieme(nome,cognome,username,ruolo,stato);
+			return utenteDAO.cercaInsieme(u);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();

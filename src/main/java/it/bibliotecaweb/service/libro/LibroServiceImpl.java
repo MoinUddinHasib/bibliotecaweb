@@ -26,7 +26,6 @@ public class LibroServiceImpl implements LibroService {
 			return libroDAO.list();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -46,7 +45,6 @@ public class LibroServiceImpl implements LibroService {
 			return libroDAO.get(id);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -77,7 +75,6 @@ public class LibroServiceImpl implements LibroService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -106,7 +103,6 @@ public class LibroServiceImpl implements LibroService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -129,7 +125,6 @@ public class LibroServiceImpl implements LibroService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -166,13 +161,12 @@ public class LibroServiceImpl implements LibroService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
 
 	@Override
-	public Set<Libro> findByParameter(String titolo, String genere, String trama, Autore a) {
+	public Set<Libro> findByParameter(Libro l) {
 		// questo è come una connection
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
@@ -181,10 +175,9 @@ public class LibroServiceImpl implements LibroService {
 			libroDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
-			return libroDAO.prendiInsieme(titolo,genere,trama,a);
+			return libroDAO.prendiInsieme(l);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();

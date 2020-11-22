@@ -54,10 +54,10 @@ public class InserisciUtente extends HttpServlet {
 		String cognome=request.getParameter("cognome");
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
+		
 		String admin=request.getParameter("admin");
 		String classic=request.getParameter("classic");
 		String guest=request.getParameter("guest");
-		String stato=request.getParameter("stato");
 		
 		String nome_utente=(String)session.getAttribute("nome_utente");
 		String cognome_utente=(String)session.getAttribute("cognome_utente");
@@ -87,18 +87,29 @@ public class InserisciUtente extends HttpServlet {
 				return;
 			}
 			
-			if(nome.isEmpty() || cognome.isEmpty() || username.isEmpty() || password.isEmpty())
+			if(nome==null || cognome==null || username==null || password ==null 
+					|| nome.isEmpty() || cognome.isEmpty() || username.isEmpty() || password.isEmpty())
 				throw new Exception("Errori di validazioni");
 
 			Utente u=new Utente(nome,cognome,username,password);
-			u.setStato(Stato.valueOf(stato));
+
 			if(admin !=null)
 				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, ar);
 			if(classic!=null)
 				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, cr);
 			if(guest!=null)
 				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, gr);
-			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(nome_utente, cognome_utente, us, r, st);
+			
+			Utente u1=new Utente(nome_utente,cognome_utente,us,null);
+			u1.setStato(null);
+			if(r!=null) {
+				u1.getRuoli().add(r);
+			}
+			if(st!=null && !st.isEmpty()) {
+				u1.setStato(Stato.valueOf(st));
+			}
+			
+			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(u1);
 			request.setAttribute("listaUtentiparam", utenti);
 		}catch (IllegalArgumentException|NullPointerException  e) {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);

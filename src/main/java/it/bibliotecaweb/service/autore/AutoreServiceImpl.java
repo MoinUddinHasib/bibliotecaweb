@@ -25,7 +25,6 @@ public class AutoreServiceImpl implements AutoreService {
 			return autoreDAO.list();
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -45,7 +44,6 @@ public class AutoreServiceImpl implements AutoreService {
 			return autoreDAO.get(id);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();
@@ -74,7 +72,6 @@ public class AutoreServiceImpl implements AutoreService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -103,7 +100,6 @@ public class AutoreServiceImpl implements AutoreService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -129,7 +125,6 @@ public class AutoreServiceImpl implements AutoreService {
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			e.printStackTrace();
 			throw e;
 		}
 	}
@@ -140,7 +135,7 @@ public class AutoreServiceImpl implements AutoreService {
 	}
 
 	@Override
-	public Set<Autore> findByParameter(String nome, String cognome) {
+	public Set<Autore> findByParameter(Autore a) {
 		// questo è come una connection
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
@@ -149,10 +144,9 @@ public class AutoreServiceImpl implements AutoreService {
 			autoreDAO.setEntityManager(entityManager);
 
 			// eseguo quello che realmente devo fare
-			return autoreDAO.cercaInsieme(nome,cognome);
+			return autoreDAO.cercaInsieme(a);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			entityManager.close();

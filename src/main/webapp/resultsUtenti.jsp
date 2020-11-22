@@ -49,8 +49,12 @@
 			</div>
 
 			<div class='card-body'>
+			<a href="${pageContext.request.contextPath}/SearchUtente" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 				<a class="btn btn-primary " href="InserisciUtente">Aggiungi
 					utente</a>
+					
 
 				<div class='table-responsive'>
 					<table class='table table-striped '>
@@ -79,7 +83,7 @@
 										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
 										href="UpdateUtente?id=${u.getId()}">Edit</a> <a
 										class="btn btn-outline-danger btn-sm"
-										href="CancellaUtente?id=${u.getId()}">Delete</a>
+										href="${pageContext.request.contextPath}/confermaUtente.jsp?id=${u.getId()}">Delete</a>
 
 									</td>
 								</tr>

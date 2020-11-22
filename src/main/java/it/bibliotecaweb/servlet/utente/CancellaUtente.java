@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import it.bibliotecaweb.model.Utente;
+import it.bibliotecaweb.model.Utente.Stato;
 import it.bibliotecaweb.model.Ruolo;
 import it.bibliotecaweb.service.MyServiceFactory;
 
@@ -37,14 +38,21 @@ public class CancellaUtente extends HttpServlet {
 		String nome_utente=(String)session.getAttribute("nome_utente");
 		String cognome_utente=(String)session.getAttribute("cognome_utente");
 		String username=(String)session.getAttribute("username");
-		Ruolo ruolo=(Ruolo)session.getAttribute("ruolo");
-		String stato=(String)session.getAttribute("stato");
+		Ruolo r=(Ruolo)session.getAttribute("ruolo");
+		String st=(String)session.getAttribute("stato");
 		
 		try {
 			Utente c = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("id")));
-			MyServiceFactory.getUtenteServiceInstance().rimuovi(c);	
-			
-			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(nome_utente, cognome_utente, username, ruolo, stato);
+			MyServiceFactory.getUtenteServiceInstance().rimuovi(c);			
+			Utente u1=new Utente(nome_utente,cognome_utente,username,null);
+			u1.setStato(null);
+			if(r!=null) {
+				u1.getRuoli().add(r);
+			}
+			if(st!=null && !st.isEmpty()) {
+				u1.setStato(Stato.valueOf(st));
+			}
+			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(u1);
 			request.setAttribute("listaUtentiparam", utenti);
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 			request.getRequestDispatcher("resultsUtenti.jsp").forward(request, response);

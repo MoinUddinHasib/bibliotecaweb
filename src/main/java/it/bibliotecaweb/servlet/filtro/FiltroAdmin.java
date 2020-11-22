@@ -42,14 +42,13 @@ public class FiltroAdmin implements Filter{
 		
 		for(Ruolo r: ruoli) {
 			if(r.equals(ruolo_admin)) {
+				session.setAttribute("admin_cond", true);
 				chain.doFilter(request, response);		
 				return;
 			}
 		}
 		req.setAttribute("errorMessage", "Non hai i permessi");
-		req.getRequestDispatcher("EntryPage.jsp").forward(req, res);
-
-		
+		req.getRequestDispatcher("EntryPage.jsp").forward(req, res);		
 	}
 
 }

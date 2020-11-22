@@ -1,6 +1,7 @@
 package it.bibliotecaweb.servlet;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.bibliotecaweb.model.Ruolo;
 import it.bibliotecaweb.model.Utente;
 import it.bibliotecaweb.service.MyServiceFactory;
 
@@ -36,7 +38,7 @@ public class ServletLoggin extends HttpServlet {
 			response.sendRedirect(request.getContextPath());
 			session.invalidate();
 			return;
-		}
+		} 
 		request.getRequestDispatcher("EntryPage.jsp").forward(request, response);
 	}
 
@@ -60,10 +62,35 @@ public class ServletLoggin extends HttpServlet {
 			session.setAttribute("username_login", uten.getUsername());
 			session.setAttribute("stato_login", uten.getStato());
 			session.setAttribute("ruoli", uten.getRuoli());
+			autenticazione(session);
 			request.getRequestDispatcher("EntryPage.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	private void autenticazione(HttpSession session) {		
+		Set<Ruolo> ruoli=(Set<Ruolo>) session.getAttribute("ruoli");
+		
+		Ruolo ruolo_admin=null;
+		Ruolo ruolo_classic=null;
+		try {
+			ruolo_admin = MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(1l);
+			ruolo_classic = MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(2l);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		session.setAttribute("admin_cond", false);
+		session.setAttribute("classic_cond", false);
+		
+		for(Ruolo r: ruoli) {
+			if(r.equals(ruolo_admin)) {
+				session.setAttribute("admin_cond", true);
+			}
+			if(r.equals(ruolo_classic)) {
+				session.setAttribute("classic_cond", true);
+			}
+		}
+		
+	}
 }

@@ -78,10 +78,14 @@ public class UpdateAutore extends HttpServlet {
 
 			LocalDate data_nascita = LocalDate.parse(dat[0]+"-"+dat[1]+"-"+dat[2]);
 			
-			Autore au = new Autore(nome,cognome,data_nascita);
-			au.setId(Long.parseLong(request.getParameter("id")));
+			Autore au=MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("id")));
+			au.setNome(nome);
+			au.setCognome(cognome);
+			au.setData_di_nascita(data_nascita);
 			MyServiceFactory.getAutoreServiceInstance().aggiorna(au);
-			Set<Autore> utenti=MyServiceFactory.getAutoreServiceInstance().findByParameter(n, c);
+			
+			Autore a=new Autore(n,c,null);
+			Set<Autore> utenti=MyServiceFactory.getAutoreServiceInstance().findByParameter(a);
 			request.setAttribute("listaAutoriparam", utenti);	
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {

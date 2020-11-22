@@ -21,7 +21,7 @@ import it.bibliotecaweb.model.Ruolo;
  */
 @WebFilter(urlPatterns = {"/editAutore.jsp","/editLibro.jsp","/editUtente.jsp","/EntryPage.jsp","/footer.jsp","/form_cercaAutore.jsp","/form_cercaLibro.jsp",
 		"/form_cercaUtente.jsp","/header.jsp","/insertAutore.jsp","/insertLibro.jsp","/insertUtente.jsp","/listaLibri.jsp","/navbar.jsp","/resultsAutori.jsp",
-		"/resultsUtenti.jsp","/showAutore.jsp","/showLibro.jsp","/showUtente.jsp"})
+		"/resultsUtenti.jsp","/showAutore.jsp","/showLibro.jsp","/showUtente.jsp","/confermaLibro.jsp","/confermaAutore.jsp","/confermaUtente.jsp"})
 public class FiltroJSP implements Filter {
 
     /**

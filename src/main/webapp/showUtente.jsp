@@ -56,6 +56,11 @@
 				  <dd class="col-sm-9">${requestScope.stato}</dd>
 		    	</dl>
 		    	
+		    	<a href="${pageContext.request.contextPath}/SearchUtente?nome=${sessionScope.nome_utente}&cognome=${sessionScope.cognome_utente}&
+				username=${sessionScope.username}&ruolo=${sessionScope.ruolo.getId()}&stato=${sessionScope.stato}" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
+		    	
 		    </div>
 		    
 		</div>	

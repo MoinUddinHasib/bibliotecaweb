@@ -41,8 +41,8 @@ public class CancellaAutore extends HttpServlet {
 			if(c.getLibri().size()>0)
 				throw new Exception("Autore ha dei libri");
 			MyServiceFactory.getAutoreServiceInstance().rimuovi(c);	
-			
-			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
+			Autore a=new Autore(nome,cognome,null);
+			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(a);
 			request.setAttribute("listaAutoriparam", autori);
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 			request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);
@@ -50,7 +50,8 @@ public class CancellaAutore extends HttpServlet {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
 			return;
 		}  catch (Exception e) {
-			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
+			Autore a=new Autore(nome,cognome,null);
+			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(a);
 			request.setAttribute("listaAutoriparam", autori);
 			request.setAttribute("errorMessage", "L'autore ha dei libri quindi non può essere cancellato");
 			request.getRequestDispatcher("resultsAutori.jsp").forward(request, response);

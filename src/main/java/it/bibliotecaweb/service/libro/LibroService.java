@@ -14,6 +14,6 @@ public interface LibroService extends IBaseService<Libro>{
 
 	public void inserisciAutore(Libro l, Autore a);
 
-	public Set<Libro> findByParameter(String titolo, String genere, String trama, Autore a);
+	public Set<Libro> findByParameter(Libro l);
 
 }

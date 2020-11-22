@@ -51,7 +51,11 @@
 		    </div>
 
 		    <div class='card-body'>
+		    <a href="${pageContext.request.contextPath}/SearchAutore" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 		    	<a class="btn btn-primary " href="InserisciAutore">Aggiungi autore</a>
+		    	
 		    						
 		        <div class='table-responsive'>
 		            <table class='table table-striped ' >
@@ -74,11 +78,11 @@
 		                        <td>${a.getData_di_nascita()}</td>
 		                        <td>
 									<a class="btn  btn-sm btn-outline-secondary" href="VisualizzaAutore?id=${a.getId()}">Visualizza</a>
-
+									<c:if test = "${(sessionScope.admin_cond) || (sessionScope.classic_cond)}">
 									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="UpdateAutore?id=${a.getId()}">Edit</a>
 
-									<a class="btn btn-outline-danger btn-sm" href="CancellaAutore?id=${a.getId()}">Delete</a>
-
+									<a class="btn btn-outline-danger btn-sm" href="${pageContext.request.contextPath}/confermaAutore.jsp?id=${a.getId()}">Delete</a>
+									</c:if>
 								</td>
 		                    </tr>
 		                    </c:forEach>

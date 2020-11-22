@@ -32,6 +32,10 @@ public class SearchAutore extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("nome")!=null) {
+			doPost(request, response);
+			return;
+		}
 		request.getRequestDispatcher("form_cercaAutore.jsp").forward(request, response);
 	}
 
@@ -44,8 +48,8 @@ public class SearchAutore extends HttpServlet {
 		String cognome=request.getParameter("cognome");
 		
 		try {
-			
-			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(nome,cognome);
+			Autore a=new Autore(nome,cognome,null);
+			Set<Autore> autori=MyServiceFactory.getAutoreServiceInstance().findByParameter(a);
 			request.setAttribute("listaAutoriparam", autori);
 		}catch (Exception e) {
 			e.printStackTrace();

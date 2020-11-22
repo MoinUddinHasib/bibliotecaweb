@@ -71,13 +71,15 @@ public class UpdateLibro extends HttpServlet {
 		String trama = request.getParameter("trama");
 		String autoreid = request.getParameter("autore");
 		String id= request.getParameter("id");
+		
 		String ti=(String)session.getAttribute("titolo");
 		String g=(String)session.getAttribute("genere");
 		String tr=(String)session.getAttribute("trama");
 		Autore au=(Autore)session.getAttribute("autore");
 
 
-		if (titolo.isEmpty() || genere.isEmpty() || trama.isEmpty() || isNaN(autoreid)) {
+		if (id==null || autoreid==null || titolo==null || genere==null ||
+				trama==null || titolo.isEmpty() || genere.isEmpty() || trama.isEmpty() || isNaN(autoreid) || id.isEmpty()) {
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
 			request.setAttribute("titolo", titolo);
 			request.setAttribute("genere", genere);
@@ -96,11 +98,16 @@ public class UpdateLibro extends HttpServlet {
 
 
 		try {
-			Libro libroInstance = new Libro(titolo, genere, trama);
-			libroInstance.setId(Long.parseLong(id));
+			Libro libroInstance = MyServiceFactory.getLibroServiceInstance().caricaSingoloElemento(Long.parseLong(id));
+			libroInstance.setTitolo(titolo);;
+			libroInstance.setGenere(genere);
+			libroInstance.setTrama(trama);
 			libroInstance.setAutore(MyServiceFactory.getAutoreServiceInstance().caricaSingoloElemento(Long.parseLong(autoreid)));
 			MyServiceFactory.getLibroServiceInstance().aggiorna(libroInstance);
-			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(ti, g, tr, au);
+			
+			Libro l=new Libro(ti,g,tr);
+			l.setAutore(au);
+			Set<Libro> libri=MyServiceFactory.getLibroServiceInstance().findByParameter(l);
 			request.setAttribute("listaLibriparam", libri);
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {

@@ -41,8 +41,7 @@ public class UpdateUtente extends HttpServlet {
 			request.setAttribute("nome", u.getNome());
 			request.setAttribute("cognome", u.getCognome());
 			request.setAttribute("username", u.getUsername());
-			request.setAttribute("password", u.getPassword());
-			request.setAttribute("last", u.getUsername());
+
 			Ruolo ra=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(1l);
 			Ruolo rc=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(2l);
 			Ruolo rg=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(3l);
@@ -69,7 +68,6 @@ public class UpdateUtente extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
 		request.getRequestDispatcher("editUtente.jsp").forward(request, response);
 	}
 
@@ -83,7 +81,6 @@ public class UpdateUtente extends HttpServlet {
 		String nome=request.getParameter("nome");
 		String cognome=request.getParameter("cognome");
 		String username=request.getParameter("username");
-		String password=request.getParameter("password");
 		
 		String admin=request.getParameter("admin");
 		String classic=request.getParameter("classic");
@@ -96,18 +93,19 @@ public class UpdateUtente extends HttpServlet {
 		String us=(String)session.getAttribute("username");
 		Ruolo r=(Ruolo)session.getAttribute("ruolo");
 		String st=(String)session.getAttribute("stato");
-
+		
+		
 		try {
+			Utente u = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(Long.parseLong(request.getParameter("id")));
 			Ruolo ar=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(1l);
 			Ruolo cr=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(2l);
 			Ruolo gr=MyServiceFactory.getRuoloServiceInstance().caricaSingoloElemento(3l);
 			Boolean cond=MyServiceFactory.getUtenteServiceInstance().caricaPerUsername(username)!=null;
-			if(!request.getParameter("last").equals(username) && cond || (admin==null && classic==null && guest==null)) {
+			if(!u.getUsername().equals(username) && cond || (admin==null && classic==null && guest==null)) {
 				request.setAttribute("id", id);
 				request.setAttribute("nome", nome);
 				request.setAttribute("cognome", cognome);
 				request.setAttribute("username", username);
-				request.setAttribute("password", password);
 				
 				request.setAttribute("cond_admin", admin!=null);
 
@@ -126,22 +124,37 @@ public class UpdateUtente extends HttpServlet {
 				return;
 			}
 			
-			if(nome.isEmpty() || cognome.isEmpty() || username.isEmpty() || password.isEmpty())
+			if(nome==null || cognome==null || username==null || stato==null || id==null || id.isEmpty() ||
+					nome.isEmpty() || cognome.isEmpty() || username.isEmpty() || stato.isEmpty())
 				throw new Exception("Errori di validazioni");
-
-			Utente u=new Utente(nome,cognome,username,password);
+			if(id==null || id.isEmpty()) {
+				throw new NullPointerException("Id sbagliato");
+			}
+			
+			u.setNome(nome);
+			u.setCognome(cognome);
+			u.setUsername(username);
 			u.setStato(Stato.valueOf(stato));
-			u.setId(Long.parseLong(id));
+			u.getRuoli().clear();
 			if(admin !=null)
 				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, ar);
 			if(classic!=null)
 				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, cr);
 			if(guest!=null)
 				u=MyServiceFactory.getUtenteServiceInstance().inserisciRuolo(u, gr);
-
-			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(nome_utente, cognome_utente, us, r, st);
+			
+			Utente u1=new Utente(nome_utente,cognome_utente,us,null);
+			u1.setStato(null);
+			if(r!=null) {
+				u1.getRuoli().add(r);
+			}
+			if(st!=null && !st.isEmpty()) {
+				u1.setStato(Stato.valueOf(st));
+			}
+			
+			Set<Utente> utenti=MyServiceFactory.getUtenteServiceInstance().findByParameter(u1);
 			request.setAttribute("listaUtentiparam", utenti);
-		}catch (IllegalArgumentException|NullPointerException  e) {
+		}catch (IllegalArgumentException|NullPointerException e) {
 			request.getRequestDispatcher("/ServletLogOut").forward(request, response);
 			return;
 		} catch (Exception e) {
@@ -160,14 +173,12 @@ public class UpdateUtente extends HttpServlet {
 			request.setAttribute("nome", nome);
 			request.setAttribute("cognome", cognome);
 			request.setAttribute("username", username);
-			request.setAttribute("password", password);
 			
 			request.setAttribute("cond_admin", admin!=null);
 
 			request.setAttribute("cond_classic", classic!=null);
 
 			request.setAttribute("cond_guest", guest!=null);
-			
 			
 			request.setAttribute("stato", stato);
 			

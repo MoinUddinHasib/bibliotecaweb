@@ -11,6 +11,6 @@ public interface AutoreService extends IBaseService<Autore>{
 	// questo mi serve per injection
 	public void setAutoreDao(AutoreDAO autoreDao);
 
-	public Set<Autore> findByParameter(String nome, String cognome);
+	public Set<Autore> findByParameter(Autore a);
 
 }

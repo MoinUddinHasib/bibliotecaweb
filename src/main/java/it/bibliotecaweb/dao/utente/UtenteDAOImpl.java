@@ -62,16 +62,22 @@ public class UtenteDAOImpl implements UtenteDAO {
 		return ris.isEmpty()?null:ris.get(0);
 	}
 
-	@Override//
-	public Set<Utente> cercaInsieme(String nome, String cognome, String username, Ruolo ruolo, String stato) {
+	@Override
+	public Set<Utente> cercaInsieme(Utente u) {
 		String q="select distinct u from Utente u join u.ruoli r where (u.nome like ?1 or ?1 = null) and (u.cognome like ?2 or ?2 = null)"
 				+ " and (u.username like ?3 or ?3 = null) and (r.id = ?4 or ?4 = null) and (u.stato = ?5 or ?5 = null)";
 		TypedQuery<Utente> query=entityManager.createQuery(q,Utente.class);
-		query.setParameter(1, nome.isEmpty()?null:"%"+nome+"%");
-		query.setParameter(2, cognome.isEmpty()?null:"%"+cognome+"%");
-		query.setParameter(3, username.isEmpty()?null:"%"+username+"%");
-		query.setParameter(4, ruolo==null?null:ruolo.getId());
-		query.setParameter(5, stato.isEmpty()?null:Stato.valueOf(stato));
+		String nome=u.getNome();
+		String cognome=u.getCognome();
+		String username=u.getUsername();
+		Long ruolo=u.getRuoli().size()==0?null:((Ruolo)u.getRuoli().toArray()[0]).getId();
+		Stato stato=u.getStato();
+		
+		query.setParameter(1, (nome==null || nome.isEmpty())?null:"%"+nome+"%");
+		query.setParameter(2, (cognome==null || cognome.isEmpty())?null:"%"+cognome+"%");
+		query.setParameter(3, (username==null || username.isEmpty())?null:"%"+username+"%");
+		query.setParameter(4, ruolo);
+		query.setParameter(5, stato);
 		return query.getResultList().stream().collect(Collectors.toSet());
 	}
 

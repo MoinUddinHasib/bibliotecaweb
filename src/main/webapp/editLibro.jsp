@@ -38,7 +38,6 @@
 		</div>
 		<div class='card-body'>
 
-			<!-- <h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6> -->
 			<form method="post" action="UpdateLibro" name="campi">
 
 				<input name="id" value="${requestScope.id }" hidden="true">
@@ -63,8 +62,8 @@
 					</div>
 				</div>
 
-				<div class="form-row">
-					<div class="form-group col-md-3">
+
+					<div class="dropdown bootstrap-select">
 						<label>Autore </label> <select name="autore">
 							<c:forEach items="${requestScope.autori}" var="a">
 								<option value="${a.id }"
@@ -74,12 +73,14 @@
       						>${a.nome };	${a.cognome }</option>
 							</c:forEach>
 						</select>
-					</div>
 				</div>
-
+				<a href="${pageContext.request.contextPath}/SearchLibro?titolo=${sessionScope.titolo}&genere=${sessionScope.genere}&
+				trama=${sessionScope.trama}&autore=${sessionScope.autore.getId()}" class='btn btn-outline-secondary' style='width:80px'>
+		          Back
+		        </a>
 				<button type="submit" name="submit" value="submit" id="submit"
 					class="btn btn-primary">Conferma</button>
-
+				
 			</form>
 
 			<div class='card-footer'></div>
