@@ -69,7 +69,8 @@ public class InserisciAutore extends HttpServlet {
 		try {
 			Autore a = new Autore(nome, cognome, data);			
 			MyServiceFactory.getAutoreServiceInstance().inserisciNuovo(a);
-			Autore a1=new Autore(nome,cognome,null);
+			
+			Autore a1=new Autore(n,c,null);
 			request.setAttribute("listaAutoriparam", MyServiceFactory.getAutoreServiceInstance().findByParameter(a1));
 			request.setAttribute("successMessage", "Operazione effettuata con successo");
 		} catch (Exception e) {
