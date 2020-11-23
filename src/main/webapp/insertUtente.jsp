@@ -39,16 +39,16 @@
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="InserisciUtente" name="campi">
+				<form method="post" action="InserisciUtente" name="campi" novalidate>
 
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label>Nome <span class="text-danger">*</span></label> <input
+							<label>Nome </label> <input
 								type="text" name="nome" id="nome" class="form-control" required>
 						</div>
 
 						<div class="form-group col-md-6">
-							<label>Cognome <span class="text-danger">*</span></label> <input
+							<label>Cognome </label> <input
 								type="text" name="cognome" id="cognome" class="form-control"
 								required>
 						</div>
@@ -68,10 +68,10 @@
 						<div class="form-group col-md-3">
 							<fieldset>
 								<legend>Ruoli</legend>
-								<br> <input type="checkbox" name="admin"
+								<br> <input type="checkbox" id="admin" name="admin"
 									value=${requestScope.admin } /> ADMIN <br /> <input
-									type="checkbox" name="classic" value=${requestScope.classic } />
-								CLASSIC <br /> <input type="checkbox" name="guest"
+									type="checkbox" id="classic" name="classic" value=${requestScope.classic } />
+								CLASSIC <br /> <input type="checkbox" id="guest" name="guest"
 									value=${requestScope.guest } /> GUEST
 							</fieldset>
 

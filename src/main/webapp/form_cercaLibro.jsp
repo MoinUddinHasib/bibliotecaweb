@@ -46,22 +46,19 @@
 
 						<div class="form-group col-md-6">
 							<label>Titolo </label> <input type="text" name="titolo"
-								id="titolo" class="form-control"
-								>
+								id="titoloc" class="form-control">
 
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Genere </label> <input type="text" name="genere"
-								id="genere" class="form-control"
-								>
+								id="generec" class="form-control">
 
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Trama </label> <input type="text" name="trama"
-								id="trama" class="form-control"
-								>
+								id="tramac" class="form-control">
 
 						</div>
 					</div>

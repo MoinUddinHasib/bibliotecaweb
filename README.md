@@ -1,4 +1,4 @@
-###INIZIALIZZAZIONE
+INIZIALIZZAZIONE
 ----------------------------------
 
 Mettere value="create" nella property name="hibernate.hbm2ddl.auto"

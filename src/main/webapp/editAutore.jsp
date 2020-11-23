@@ -38,7 +38,7 @@
 		</div>
 		<div class='card-body'>
 
-			<form method="post" action="UpdateAutore" name="campi">
+			<form method="post" action="UpdateAutore" name="campi" novalidate>
 				
 				<input type="hidden" value="${requestScope.id }" name="id">
 

@@ -38,7 +38,7 @@
 		</div>
 		<div class='card-body'>
 
-			<form method="post" action="UpdateLibro" name="campi">
+			<form method="post" action="UpdateLibro" name="campi" novalidate>
 
 				<input name="id" value="${requestScope.id }" hidden="true">
 				<input name="autore_fk" value="${requestScope.autore_fk }" hidden="true">

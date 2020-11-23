@@ -39,7 +39,7 @@
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="UpdateUtente" name="campi">
+				<form method="post" action="UpdateUtente" name="campi" novalidate>
 
 					<input type="hidden" name="id" value="${ requestScope.id}">
 
@@ -66,17 +66,17 @@
 						<div class="form-group col-md-3">
 							<fieldset>
 								<legend>Ruoli</legend>
-								<br> <input type="checkbox" name="admin"
+								<br> <input type="checkbox" name="admin" id="admin"
 									value=${requestScope.admin }
 									<c:if test = "${requestScope.cond_admin == true}">
          								checked
       								</c:if> />
-								ADMIN <br /> <input type="checkbox" name="classic"
+								ADMIN <br /> <input type="checkbox" name="classic" id="classic"
 									value=${requestScope.classic }
 									<c:if test = "${requestScope.cond_classic == true}">
          								checked
       								</c:if> />
-								CLASSIC <br /> <input type="checkbox" name="guest"
+								CLASSIC <br /> <input type="checkbox" name="guest" id="guest"
 									value=${requestScope.guest }
 									<c:if test = "${requestScope.cond_guest == true}">
          								checked

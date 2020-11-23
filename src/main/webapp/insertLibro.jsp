@@ -39,7 +39,7 @@
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="InserisciLibro" name="campi">
+				<form method="post" action="InserisciLibro" name="campi" novalidate>
 
 					<div class="form-row">
 

@@ -45,20 +45,20 @@
 					<div class="form-row">
 
 						<div class="form-group col-md-6">
-							<label>Nome </label> <input type="text" name="nome" id="nome"
+							<label>Nome </label> <input type="text" name="nome" id="nomec"
 								class="form-control">
 
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Cognome </label> <input type="text" name="cognome"
-								id="cognome" class="form-control">
+								id="cognomec" class="form-control">
 
 						</div>
 
 						<div class="form-group col-md-6">
 							<label>Username </label> <input type="text" name="username"
-								id="username" class="form-control">
+								id="usernamec" class="form-control">
 
 						</div>
 

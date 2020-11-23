@@ -40,7 +40,7 @@
 			</div>
 			<div class='card-body'>
 
-				<form method="post" action="InserisciAutore" name="campi">
+				<form method="post" action="InserisciAutore" name="campi"  novalidate>
 
 					<div class="form-row">
 						<div class="form-group col-md-6">

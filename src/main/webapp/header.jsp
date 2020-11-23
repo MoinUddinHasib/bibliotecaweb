@@ -32,3 +32,44 @@
   }
   
 </style>
+<script src="./assets/js/jquery-3.4.1.min.js">
+</script>
+<script >
+$(document).ready(function(){
+	$("#submit").click(function(){
+		var error=""
+ 		if($("#nome").length && $("#nome").val()==""){
+			error+="nome; "
+		}
+		if($("#cognome").length && $("#cognome").val()==""){
+			error+="cognome; "
+		}
+		if($("#data").length && $("#data").val()==""){
+			error+="data; "
+		}
+		if($("#titolo").length && $("#titolo").val()==""){
+			error+="titolo; "
+		}
+		if($("#genere").length && $("#genere").val()==""){
+			error+="genere; "
+		}
+		if($("#trama").length && $("#trama").val()==""){
+			error+="trama; "
+		}
+		if($("#username").length && $("#username").val()==""){
+			error+="username; "
+		}
+		if($("#password").length && $("#password").val()==""){
+			error+="password; "
+		}
+		if($("#admin").length && $("#admin").is(":not(:checked)") && $("#classic").is(":not(:checked)") && $("#guest").is(":not(:checked)")){
+			error+="selezione di almeno un ruolo "
+		}
+		if(error!=""){
+			error+=" -> Manca"
+			alert(error)
+			event.preventDefault()
+		}
+	});
+});
+</script>
